@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ProjectRootManager">
+=======
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Info/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK">
+>>>>>>> b9b0ccd2c5e564d71dec7b8cdaf6a3146b6858d9
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
