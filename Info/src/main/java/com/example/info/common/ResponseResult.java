@@ -1,4 +1,4 @@
-package com.example.info.common;
+xiapackage com.example.info.common;
 
 public class ResponseResult<T> {
     private boolean success;
