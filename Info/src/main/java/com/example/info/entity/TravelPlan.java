@@ -8,15 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "websites")
+@Table(name = "travel_plans")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Website extends Info {
-    @Column(nullable = false, length = 500)
-    private String url;
-
+public class TravelPlan extends Info {
     @Lob
-    private String description;
+    private String studyContent;
+
+    @Column
+    private Integer studyDuration;
+
+    @Column
+    private Integer progress;
+
+    @Column(length = 20)
+    private String checkInStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
@@ -24,8 +30,8 @@ public class Website extends Info {
 
     @ManyToMany
     @JoinTable(
-            name = "website_tag",
-            joinColumns = @JoinColumn(name = "website_id"),
+            name = "travel_plan_tag",
+            joinColumns = @JoinColumn(name = "travel_plan_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags = new ArrayList<>();
