@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // 导入封装的待办API（与auth调用方式统一）
-import { getTodos, createTodo, deleteTodo, updateTodoStatus } from '../../api/index';
+import { fetchTodos, createTodo, deleteTodo, updateTodo } from '../../api/index';
+import type { Todo } from '../../types/index';
 import './css/TodoList.css';
 const TodoList = () => {
   const [todos, setTodos] = useState([]);

@@ -45,6 +45,8 @@ import TravelPlanEdit from '../pages/admin/TravelPlanEdit.tsx';
 import StudyCheckInEdit from '../pages/admin/StudyCheckInEdit.tsx';
 import CategoryEdit from '../pages/admin/CategoryEdit.tsx';
 import TagEdit from '../pages/admin/TagEdit.tsx';
+import DiaryEdit from '../pages/admin/DiaryEdit.tsx';
+import TodoEdit from '../pages/admin/TodoEdit.tsx';
 
 
 // 公共路由
@@ -116,6 +118,8 @@ const adminRoutes: RouteObject = {
     { path: 'list/study-checkins/edit/:id?', element: <StudyCheckInEdit /> },
     { path: 'list/categories/edit/:id?', element: <CategoryEdit /> },
     { path: 'list/tags/edit/:id?', element: <TagEdit /> },
+    { path: 'list/diaries/edit/:id?', element: <DiaryEdit /> },
+    { path: 'list/todos/edit/:id?', element: <TodoEdit /> },
   ]
 };
 

@@ -61,6 +61,11 @@ import {
     updateVideo,
     fetchVideos,
 
+    createDiary,
+    deleteDiary,
+    updateDiary,
+    fetchDiaries,
+
     fetchAllCategories,
     fetchAllArticles,
     fetchAllTags
@@ -77,7 +82,8 @@ import type {
     Website,
     Expense,
     TravelPlan,
-    Video
+    Video,
+    Diary
 } from '../types/index';
 
 // 文章列表配置
@@ -235,7 +241,7 @@ export const tagListConfig: ListConfig<Tag> = {
 export const todoListConfig: ListConfig<Todo> = {
     title: '待办',
     itemIdKey: 'id',
-    createLink: '/admin/todos/add',
+    createLink: '/admin/list/todos/edit',
     api: {
         createItem: createTodo,
         deleteItem: deleteTodo,
@@ -246,7 +252,7 @@ export const todoListConfig: ListConfig<Todo> = {
         { 
             key: 'title', 
             title: '待办标题', 
-            width: '35%' 
+            width: '30%' 
         },
         { 
             key: 'status', 
@@ -254,18 +260,20 @@ export const todoListConfig: ListConfig<Todo> = {
             width: '15%',
         },
         { key: 'priority', title: '优先级', width: '15%' },
-        { key: 'dueTime', title: '截止时间', width: '20%' },
-        { key: 'createdTime', title: '创建时间', width: '15%' }
+        { key: 'deadline', title: '截止时间', width: '20%' },
+        { key: 'createdTime', title: '创建时间', width: '20%' }
     ],
     filters: [
         {
             key: 'status',
             type: 'select',
             label: '状态',
-            defaultValue: 0,
+            defaultValue: 'all',
             options: [
-                { value: 0 , label: '待处理' },
-                { value: 1 , label: '已完成' }
+                { value: 'all', label: '全部' },
+                { value: 'PENDING', label: '待处理' },
+                { value: 'IN_PROGRESS', label: '进行中' },
+                { value: 'COMPLETED', label: '已完成' }
             ]
         },
         {
@@ -275,25 +283,27 @@ export const todoListConfig: ListConfig<Todo> = {
             defaultValue: 'all',
             options: [
                 { value: 'all', label: '全部' },
-                { value: 'low', label: '低' },
-                { value: 'medium', label: '中' },
-                { value: 'high', label: '高' }
+                { value: '1', label: '低' },
+                { value: '2', label: '较低' },
+                { value: '3', label: '中' },
+                { value: '4', label: '较高' },
+                { value: '5', label: '高' }
             ]
+        },
+        {
+            key: 'categoryId',
+            type: 'select',
+            label: '分类',
+            defaultValue: 0,
+            options: []
         }
     ],
     actions: [
         {
-            key: 'status',
-            label: '状态',
-            onClick: (item: Todo) => updateTodo(item),
-            className: 'success-btn',
-            disabled: (item: Todo) => item.status === true
-        },
-        {
             key: 'edit',
             label: '编辑',
             isLink: true,
-            linkGenerator: (item: Todo): string => `/admin/todos/edit/${item.id}`,
+            linkGenerator: (item: Todo): string => `/admin/list/todos/edit/${item.id}`,
             className: 'edit-btn'
         }
     ],
@@ -476,6 +486,66 @@ export const categoryListConfig: ListConfig<Category> = {
     type: 'other'
 };
 
+// 日記列表配置
+export const diaryListConfig: ListConfig<Diary> = {
+    title: '日記',
+    itemIdKey: 'id',
+    createLink: '/admin/list/diaries/edit',
+    api: {
+        createItem: createDiary,
+        deleteItem: deleteDiary,
+        updateItem: updateDiary,
+        fetchList: fetchDiaries,
+    },
+    columns: [
+        { key: 'title', title: '標題', width: '30%' },
+        { key: 'mood', title: '心情', width: '15%' },
+        { key: 'weather', title: '天氣', width: '15%' },
+        { key: 'createdTime', title: '創建時間', width: '25%' },
+        { key: 'category', title: '分類', width: '15%' }
+    ],
+    filters: [
+        {
+            key: 'mood',
+            type: 'select',
+            label: '心情',
+            defaultValue: 'all',
+            options: [
+                { value: 'all', label: '全部' },
+                { value: 'HAPPY', label: '開心' },
+                { value: 'SAD', label: '難過' },
+                { value: 'EXCITED', label: '興奮' },
+                { value: 'CALM', label: '平靜' },
+                { value: 'ANGRY', label: '生氣' },
+                { value: 'ANXIOUS', label: '焦慮' }
+            ]
+        },
+        {
+            key: 'weather',
+            type: 'select',
+            label: '天氣',
+            defaultValue: 'all',
+            options: [
+                { value: 'all', label: '全部' },
+                { value: 'SUNNY', label: '晴天' },
+                { value: 'CLOUDY', label: '多雲' },
+                { value: 'RAINY', label: '雨天' },
+                { value: 'SNOWY', label: '雪天' },
+                { value: 'WINDY', label: '大風' }
+            ]
+        },
+        {
+            key: 'categoryId',
+            type: 'select',
+            label: '分類',
+            defaultValue: 0,
+            options: []
+        }
+    ],
+    actions: [],
+    type: 'other'
+};
+
 export const listConfigMap = {
     articles: articleListConfig,
     cards: knowledgeCardListConfig,
@@ -488,7 +558,8 @@ export const listConfigMap = {
     websites: websiteListConfig,
     expenses: expenseListConfig,
     travelPlans: travelPlanListConfig,
-    studyCheckIns: studyCheckInListConfig
+    studyCheckIns: studyCheckInListConfig,
+    diaries: diaryListConfig
 };
 
 export type ListType = keyof typeof listConfigMap;

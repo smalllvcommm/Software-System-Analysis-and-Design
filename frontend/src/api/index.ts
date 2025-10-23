@@ -30,7 +30,9 @@ import type {
   TravelPlan,
   TravelPlanFilterParams,
   Video,
-  VideoFilterParams
+  VideoFilterParams,
+  Diary,
+  DiaryFilterParams
 } from '../types/index'; // 所有类型均从 index 导出
 
 // ------------------------------
@@ -220,3 +222,21 @@ export const {
   fetchList: fetchVideos,
   fetchById: fetchVideoById,
 } = videoService;
+
+// ------------------------------
+// 日記相关API
+// ------------------------------
+export const diaryService = createCRUDService<Diary, DiaryFilterParams>('/diaries');
+
+export const {
+  create: createDiary,
+  delete: deleteDiary,
+  update: updateDiary,
+  fetchList: fetchDiaries,
+  fetchById: fetchDiaryById,
+} = diaryService;
+
+export const fetchAllDiaries = async () => {
+  const response = await apiClient.get<ApiResponse<Diary[]>>(`/diaries/all`);
+  return response.data;
+};

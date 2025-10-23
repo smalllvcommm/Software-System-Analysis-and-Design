@@ -153,18 +153,22 @@ export interface KnowledgeCardEditModalProps {
 export interface Todo {
   id: number;
   title: string;
-  description: string;
   content: string;
-  priority: number;
+  status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED';
   deadline: string;
-  createdDate: string;
-  status: boolean;
+  priority: number;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
 }
 
 export interface TodoFilterParams {
   searchText?: string;
-  status?: boolean;
+  status?: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED';
   priority?: number;
+  categoryId?: number;
+  tagId?: number;
   sortBy?: 'createdTime-desc' | 'createdTime-asc' | 'deadline-asc' | 'deadline-desc' | 'priority-asc' | 'priority-desc';
   page?: number;
   size?: number;
@@ -327,5 +331,36 @@ export interface VideoFilterParams {
   tagId?: number;
   page?: number;
   size?: number;
+}
+
+// 日記相关类型
+export interface Diary {
+  id: number;
+  title: string;
+  content: string;
+  mood: 'HAPPY' | 'SAD' | 'EXCITED' | 'CALM' | 'ANGRY' | 'ANXIOUS';
+  weather: 'SUNNY' | 'CLOUDY' | 'RAINY' | 'SNOWY' | 'WINDY';
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface DiaryFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  tagId?: number;
+  mood?: 'HAPPY' | 'SAD' | 'EXCITED' | 'CALM' | 'ANGRY' | 'ANXIOUS';
+  weather?: 'SUNNY' | 'CLOUDY' | 'RAINY' | 'SNOWY' | 'WINDY';
+  sortBy?: 'createdTime-desc' | 'createdTime-asc' | 'title-asc';
+  page?: number;
+  size?: number;
+}
+
+export interface DiaryEditModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  diary: Diary;
+  onSave: (diary: Partial<Diary>) => void;
 }
     
