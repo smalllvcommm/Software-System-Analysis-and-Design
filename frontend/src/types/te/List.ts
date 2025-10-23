@@ -51,7 +51,7 @@ export interface ListConfig<T> {
 		size: number;
 		}>;
 
-		fetchAllSubjects?: () => Promise<any>;
+		fetchAllCategories?: () => Promise<any>;
 
 		fetchAllArticles?: () => Promise<any>;
 

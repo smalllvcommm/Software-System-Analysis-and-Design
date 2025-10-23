@@ -32,10 +32,7 @@ const ArticleList: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalArticles, setTotalArticles] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
-  const [showMenu, setShowMenu] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [searchText, setSearchText] = useState('');
   
   // 筛选条件 - 基于最新的ArticleFilterParams接口
@@ -49,21 +46,9 @@ const ArticleList: React.FC = () => {
   
   const navigate = useNavigate();
 
-  // 检测屏幕尺寸
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    handleResize(); // 初始调用
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   // 滚动监听
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
       setShowBackToTop(window.scrollY > 300);
     };
     
@@ -176,7 +161,7 @@ const ArticleList: React.FC = () => {
   const getStatusText = (status: Article['status']) => {
     switch (status) {
       case 'PUBLISHED': return '已发布';
-      case 'UNPUBLISHED': return '未发布';
+      case 'UNPUBLISHED': return '草稿';
       default: return '未知';
     }
   };
@@ -260,9 +245,9 @@ const ArticleList: React.FC = () => {
                 <span className="article-views">
                   <FontAwesomeIcon icon={faEye} /> {article.views}
                 </span>
-                {article.subject && (
-                  <span className="article-subject">
-                    {article.subject.name}
+                {article.category && (
+                  <span className="article-category">
+                    {article.category.name}
                   </span>
                 )}
               </div>
@@ -286,54 +271,9 @@ const ArticleList: React.FC = () => {
   };
 
   return (
-    <div className="page-container">
-      {/* 头部导航 */}
-      <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
-        <div className="header-inner">
-          <Link to="/" className="logo">BlogLogo</Link>
-          
-          <nav className="desktop-nav">
-            <Link to="/">首页</Link>
-            <Link to="/articles" className="active">文章</Link>
-            <Link to="/study">学科</Link>
-            <Link to="/tags">标签</Link>
-            <Link to="/about">关于</Link>
-          </nav>
-
-          <button 
-            className="mobile-menu-btn" 
-            onClick={() => setShowMenu(!showMenu)}
-            aria-label={showMenu ? "关闭菜单" : "打开菜单"}
-          >
-            {showMenu ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
-          </button>
-        </div>
-      </header>
-
-      {/* 移动端菜单 */}
-      {isMobile && showMenu && (
-        <div className="mobile-menu-overlay">
-          <div className="mobile-menu">
-            <button 
-              className="menu-close" 
-              onClick={() => setShowMenu(false)}
-              aria-label="关闭菜单"
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-            <nav className="mobile-nav">
-              <Link to="/" onClick={() => setShowMenu(false)}>首页</Link>
-              <Link to="/articles" onClick={() => setShowMenu(false)} className="active">文章</Link>
-              <Link to="/study" onClick={() => setShowMenu(false)}>学科</Link>
-              <Link to="/tags" onClick={() => setShowMenu(false)}>标签</Link>
-              <Link to="/about" onClick={() => setShowMenu(false)}>关于</Link>
-            </nav>
-          </div>
-        </div>
-      )}
-
+    <div className="article-list-page">
       {/* 主内容区 */}
-      <main className="content-container">
+      <main className="article-list-container">
         <div className="articles-section">
           <div className="section-header">
             <h1>文章列表</h1>
@@ -487,46 +427,13 @@ const ArticleList: React.FC = () => {
       {/* 返回顶部按钮 */}
       {showBackToTop && (
         <button
-          className="back-to-top"
+          className="back-to-top-btn"
           onClick={scrollToTop}
           aria-label="返回顶部"
         >
           <FontAwesomeIcon icon={faChevronUp} />
         </button>
       )}
-
-      {/* 页脚 */}
-      <footer className="site-footer">
-        <div className="footer-inner">
-          <div className="footer-col">
-            <h3>BlogLogo</h3>
-            <p>专注于分享优质知识内容，涵盖多个学科领域</p>
-          </div>
-          <div className="footer-col">
-            <h4>快速链接</h4>
-            <ul>
-              <li><Link to="/">首页</Link></li>
-              <li><Link to="/articles">文章</Link></li>
-              <li><Link to="/study">学科</Link></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>学科分类</h4>
-            <ul>
-              <li><Link to="/study/math">高等数学</Link></li>
-              <li><Link to="/study/english">英语</Link></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4>订阅更新</h4>
-            <form>
-              <input type="email" placeholder="邮箱地址" />
-              <button>订阅</button>
-            </form>
-          </div>
-        </div>
-        <div className="copyright">© {new Date().getFullYear()} BlogLogo. 保留所有权利。</div>
-      </footer>
     </div>
   );
 };

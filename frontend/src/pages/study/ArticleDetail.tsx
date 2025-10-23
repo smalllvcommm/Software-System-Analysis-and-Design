@@ -89,10 +89,10 @@ const ArticleDetail = () => {
             
             
             {/* 分类小块 */}
-            {article.subject && (
-              <div className="subject-block">
-                <span className="subject-tag">
-                  📁 {article.subject.name}
+            {article.category && (
+              <div className="category-block">
+                <span className="category-tag">
+                  📁 {article.category.name}
                 </span>
               </div>
             )}
@@ -169,9 +169,9 @@ const ArticleDetail = () => {
         <div className="article-status">
           <span 
             className={`status-badge ${article.status === 'PUBLISHED'? 'published' : 'unpublished'}`}
-            aria-label={article.status === 'PUBLISHED'? '已发布' : '未发布'}
+            aria-label={article.status === 'PUBLISHED'? '已发布' : '草稿'}
           >
-            {article.status === 'PUBLISHED'? '已发布' : '未发布'}
+            {article.status === 'PUBLISHED'? '已发布' : '草稿'}
           </span>
           <span 
             className={`visibility-badge ${article.visibility === 'PUBLIC'? 'public' : 'private'}`}

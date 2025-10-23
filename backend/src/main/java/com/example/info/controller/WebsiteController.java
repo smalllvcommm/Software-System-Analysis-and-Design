@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/websites")
+@RequestMapping("/api/websites")
 @RequiredArgsConstructor
 public class WebsiteController {
     private final WebsiteService websiteService;
@@ -25,7 +25,7 @@ public class WebsiteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteWebsite(@PathVariable Long id) {
+    public ResponseResult<Void> deleteWebsite(@PathVariable Long id) {
         websiteService.deleteWebsite(id);
         return ResponseResult.success("删除成功");
     }

@@ -1,30 +1,38 @@
 /* 页面容器 - 限制在一个屏幕高度内 */
 .list-page-container {
-  height: 100vh;
+  height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 16px;
+  padding: 24px;
   gap: 16px;
-  background-color: #fff;
+  background-color: #f0f9f6;
 }
 
-/* 头部区域样式 */
+/* 头部区域样式 - 优化版 */
 .content-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
+  padding: 24px 32px;
+  background: white;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 8px rgba(45, 126, 94, 0.12);
+  border-left: 4px solid #2d7e5e;
   flex-shrink: 0;
+  margin-bottom: 0;
 }
 
 .page-title {
   margin: 0;
-  font-size: 20px;
-  color: #333;
-  font-weight: 600;
+  font-size: 1.75rem;
+  background: linear-gradient(135deg, #2d7e5e 0%, #4ca87e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .header-actions {
@@ -49,24 +57,26 @@
 
 /* 次要按钮（分类、标签、回收站） */
 .secondary-btn {
-  background-color: #f5f5f5;
-  color: #666;
-  border: 1px solid #e8e8e8;
+  background-color: #f0f9f6;
+  color: #1a5a44;
+  border: 2px solid #d1f0e3;
 }
 
 .secondary-btn:hover {
-  background-color: #e8e8e8;
-  color: #333;
+  background-color: #e0f2ec;
+  border-color: #2d7e5e;
 }
 
 /* 主要按钮（新建） */
 .primary-btn {
-  background-color: #1890ff;
+  background: linear-gradient(135deg, #2d7e5e 0%, #4ca87e 100%);
   color: white;
+  border: none;
 }
 
 .primary-btn:hover {
-  background-color: #096dd9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 126, 94, 0.3);
 }
 
 /* 内容区域 - 占满剩余空间并包含三个部分 */
@@ -77,12 +87,14 @@
   gap: 16px;
   overflow: hidden;
 }
-/* 筛选面板整体样式 */
+/* 筛选面板整体样式 - 优化版 */
 .filter-panel {
-  background-color: #fafafa;
-  padding: 16px;
-  border-radius: 6px;
-  border: 1px solid #eee;
+  background-color: white;
+  padding: 24px 32px;
+  border-radius: 0;
+  box-shadow: 0 2px 8px rgba(45, 126, 94, 0.12);
+  border-left: 1px solid rgba(45, 126, 94, 0.1);
+  border-right: 1px solid rgba(45, 126, 94, 0.1);
   flex-shrink: 0;
 }
 /* 行容器 - 使搜索框和筛选条件在同一行 */
@@ -105,28 +117,37 @@
 
 .search-group input {
   flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border: 2px solid #d1f0e3;
+  border-radius: 8px;
   font-size: 14px;
-  height: 36px;
+  height: 38px;
   box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.search-group input:focus {
+  outline: none;
+  border-color: #2d7e5e;
+  box-shadow: 0 0 0 3px rgba(45, 126, 94, 0.1);
 }
 
 .search-btn {
-  padding: 0 16px;
-  background-color: #1890ff;
+  padding: 0 20px;
+  background: linear-gradient(135deg, #2d7e5e 0%, #4ca87e 100%);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  height: 36px;
-  transition: background-color 0.2s;
+  font-weight: 500;
+  height: 38px;
+  transition: all 0.2s ease;
 }
 
 .search-btn:hover {
-  background-color: #096dd9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 126, 94, 0.3);
 }
 
 
@@ -149,16 +170,154 @@
 
 .filter-label {
   font-size: 14px;
-  color: #666;
+  color: #1a5a44;
+  font-weight: 600;
 }
 
 .filter-select, .filter-input {
-  padding: 6px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border: 2px solid #d1f0e3;
+  border-radius: 8px;
   font-size: 14px;
-  height: 36px;
+  color: #1a5a44;
+  height: 38px;
   box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus, .filter-input:focus {
+  outline: none;
+  border-color: #2d7e5e;
+  box-shadow: 0 0 0 3px rgba(45, 126, 94, 0.1);
+}
+
+/* 可搜索的下拉选择器 */
+.filter-item-searchable {
+  position: relative;
+}
+
+.searchable-select-wrapper {
+  position: relative;
+  min-width: 180px;
+}
+
+.searchable-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border: 2px solid #d1f0e3;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 38px;
+}
+
+.searchable-select-trigger:hover {
+  border-color: #2d7e5e;
+}
+
+.dropdown-arrow {
+  margin-left: 8px;
+  font-size: 10px;
+  color: #64958a;
+  transition: transform 0.2s ease;
+}
+
+.searchable-select-trigger:hover .dropdown-arrow {
+  color: #2d7e5e;
+}
+
+/* 下拉面板 */
+.searchable-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #d1f0e3;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(45, 126, 94, 0.15);
+  z-index: 1000;
+  max-height: 320px;
+  display: flex;
+  flex-direction: column;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 下拉搜索框 */
+.dropdown-search {
+  padding: 8px;
+  border-bottom: 1px solid #e8f5f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f9fefb;
+}
+
+.dropdown-search .search-icon {
+  color: #64958a;
+  font-size: 14px;
+}
+
+.dropdown-search input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #d1f0e3;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.dropdown-search input:focus {
+  border-color: #2d7e5e;
+  box-shadow: 0 0 0 2px rgba(45, 126, 94, 0.1);
+}
+
+/* 选项列表 */
+.dropdown-options {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 250px;
+}
+
+.dropdown-option {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 14px;
+  color: #1a5a44;
+}
+
+.dropdown-option:hover {
+  background: #f0f9f6;
+}
+
+.dropdown-option.selected {
+  background: linear-gradient(135deg, rgba(45, 126, 94, 0.1) 0%, rgba(76, 168, 126, 0.1) 100%);
+  color: #2d7e5e;
+  font-weight: 600;
+  border-left: 3px solid #2d7e5e;
+}
+
+.dropdown-empty {
+  padding: 16px 12px;
+  text-align: center;
+  color: #9cb8b1;
+  font-size: 13px;
 }
 
 /* 筛选操作按钮 - 靠右显示 */
@@ -181,24 +340,25 @@
 
 .reset-btn {
   background-color: white;
-  color: #666;
-  border: 1px solid #ddd;
+  color: #1a5a44;
+  border: 2px solid #d1f0e3;
 }
 
 .reset-btn:hover {
-  border-color: #1890ff;
-  color: #1890ff;
+  border-color: #2d7e5e;
+  background-color: #f0f9f6;
 }
 
 
 .apply-btn {
-  background-color: #1890ff;
+  background: linear-gradient(135deg, #2d7e5e 0%, #4ca87e 100%);
   color: white;
-  border: 1px solid #1890ff;
+  border: none;
 }
 
 .apply-btn:hover {
-  background-color: #096dd9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 126, 94, 0.3);
 }
 
 /* 响应式调整 - 在小屏幕上堆叠显示 */
@@ -237,9 +397,11 @@
 .table-wrapper {
   flex: 1;
   overflow-y: auto;
-  border: 1px solid #eee;
-  border-radius: 6px;
+  border: 1px solid #e8f5f0;
+  border-radius: 12px;
   position: relative;
+  background: white;
+  box-shadow: 0 1px 3px rgba(45, 126, 94, 0.08);
 }
 
 /* 确保表格始终保持10行高度空间 */
@@ -250,16 +412,16 @@
 }
 
 .table-header {
-  background-color: #f5f7fa;
+  background: linear-gradient(135deg, rgba(45, 126, 94, 0.05) 0%, rgba(76, 168, 126, 0.05) 100%);
 }
 
 .header-cell {
-  padding: 12px 16px;
+  padding: 14px 16px;
   text-align: left;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
-  color: #333;
-  border-bottom: 1px solid #eee;
+  color: #1a5a44;
+  border-bottom: 2px solid #d1f0e3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -270,12 +432,13 @@
 }
 
 .table-row {
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s;
+  border-bottom: 1px solid #e8f5f0;
+  transition: all 0.2s ease;
 }
 
 .table-row:hover {
-  background-color: #f5f7fa;
+  background-color: #f9fefb;
+  transform: translateX(2px);
 }
 
 .table-cell {
@@ -285,6 +448,20 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* 标题链接样式 */
+.title-link {
+  color: #2d7e5e;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.title-link:hover {
+  color: #4ca87e;
+  text-decoration: underline;
 }
 
 /* 占位符行样式 - 确保空数据时保持高度 */

@@ -1,197 +1,278 @@
-// src/pages/admin/Dashboard.tsx
-import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faNewspaper, faEye, faComment } from '@fortawesome/free-solid-svg-icons';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import api from '../../services/api';
 import './css/Dashboard.css';
 
-// 注册 Chart.js 组件
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+interface DashboardStats {
+  articles: number;
+  categories: number;
+  tags: number;
+  memos: number;
+  audios: number;
+  videos: number;
+  websites: number;
+  expenses: number;
+  travelPlans: number;
+  studyCheckIns: number;
+}
 
-export default function Dashboard() {
-  const [stats, setStats] = useState({
-    userCount: 0,
-    articleCount: 0,
-    viewCount: 0,
-    commentCount: 0,
+const Dashboard: React.FC = () => {
+  const { username, role } = useAuth();
+  const [stats, setStats] = useState<DashboardStats>({
+    articles: 0,
+    categories: 0,
+    tags: 0,
+    memos: 0,
+    audios: 0,
+    videos: 0,
+    websites: 0,
+    expenses: 0,
+    travelPlans: 0,
+    studyCheckIns: 0
   });
-  
-  const [chartData, setChartData] = useState({
-    labels: ['一月', '二月', '三月', '四月', '五月', '六月'],
-    datasets: [{
-      label: '文章发布量',
-      data: [12, 19, 14, 22, 25, 30],
-      backgroundColor: 'rgba(54, 162, 235, 0.5)',
-    }]
-  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // 模拟数据加载
   useEffect(() => {
-    // 实际项目中这里会调用后端 API 获取数据
-    setTimeout(() => {
-      setStats({
-        userCount: 3542,
-        articleCount: 128,
-        viewCount: 125468,
-        commentCount: 2456,
-      });
-    }, 500);
+    loadDashboardData();
   }, []);
 
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      // 并行获取所有数据
+      const [
+        articlesRes,
+        categoriesRes,
+        tagsRes,
+        memosRes,
+        audiosRes,
+        videosRes,
+        websitesRes,
+        expensesRes,
+        travelPlansRes,
+        studyCheckInsRes
+      ] = await Promise.all([
+        api.get('/articles').catch(() => ({ data: [] })),
+        api.get('/categories').catch(() => ({ data: [] })),
+        api.get('/tags').catch(() => ({ data: [] })),
+        api.get('/memos').catch(() => ({ data: [] })),
+        api.get('/audios').catch(() => ({ data: [] })),
+        api.get('/videos').catch(() => ({ data: [] })),
+        api.get('/websites').catch(() => ({ data: [] })),
+        api.get('/expenses').catch(() => ({ data: [] })),
+        api.get('/travel-plans').catch(() => ({ data: [] })),
+        api.get('/study-check-ins').catch(() => ({ data: [] }))
+      ]);
+
+      setStats({
+        articles: Array.isArray(articlesRes.data) ? articlesRes.data.length : 0,
+        categories: Array.isArray(categoriesRes.data) ? categoriesRes.data.length : 0,
+        tags: Array.isArray(tagsRes.data) ? tagsRes.data.length : 0,
+        memos: Array.isArray(memosRes.data) ? memosRes.data.length : 0,
+        audios: Array.isArray(audiosRes.data) ? audiosRes.data.length : 0,
+        videos: Array.isArray(videosRes.data) ? videosRes.data.length : 0,
+        websites: Array.isArray(websitesRes.data) ? websitesRes.data.length : 0,
+        expenses: Array.isArray(expensesRes.data) ? expensesRes.data.length : 0,
+        travelPlans: Array.isArray(travelPlansRes.data) ? travelPlansRes.data.length : 0,
+        studyCheckIns: Array.isArray(studyCheckInsRes.data) ? studyCheckInsRes.data.length : 0
+      });
+      
+      setLoading(false);
+    } catch (error) {
+      console.error('加载数据失败:', error);
+      setError('加载数据失败，请稍后重试');
+      setLoading(false);
+    }
+  };
+
+  const getCurrentGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return '早上好';
+    if (hour < 18) return '下午好';
+    return '晚上好';
+  };
+
+  // 快捷管理入口
+  const managementModules = [
+    {
+      name: '文章管理',
+      icon: '📝',
+      link: '/admin/list/articles',
+      count: stats.articles,
+      color: '#2d7e5e'
+    },
+    {
+      name: '备忘录',
+      icon: '📋',
+      link: '/admin/list/memos',
+      count: stats.memos,
+      color: '#4ca87e'
+    },
+    {
+      name: '学习打卡',
+      icon: '📚',
+      link: '/admin/list/studyCheckIns',
+      count: stats.studyCheckIns,
+      color: '#7ec8a8'
+    },
+    {
+      name: '音频管理',
+      icon: '🎵',
+      link: '/admin/list/audios',
+      count: stats.audios,
+      color: '#2d7e5e'
+    },
+    {
+      name: '视频管理',
+      icon: '🎬',
+      link: '/admin/list/videos',
+      count: stats.videos,
+      color: '#4ca87e'
+    },
+    {
+      name: '网站收藏',
+      icon: '🔗',
+      link: '/admin/list/websites',
+      count: stats.websites,
+      color: '#7ec8a8'
+    },
+    {
+      name: '财务管理',
+      icon: '💰',
+      link: '/admin/list/expenses',
+      count: stats.expenses,
+      color: '#2d7e5e'
+    },
+    {
+      name: '旅行计划',
+      icon: '✈️',
+      link: '/admin/list/travelPlans',
+      count: stats.travelPlans,
+      color: '#4ca87e'
+    }
+  ];
+
+  // 快捷创建入口
+  const quickActions = [
+    {
+      label: '新建文章',
+      icon: '✏️',
+      link: '/admin/list/articles/edit'
+    },
+    {
+      label: '添加备忘',
+      icon: '📝',
+      link: '/admin/list/memos/edit'
+    },
+    {
+      label: '记录支出',
+      icon: '💸',
+      link: '/admin/list/expenses/edit'
+    },
+    {
+      label: '学习打卡',
+      icon: '✅',
+      link: '/admin/list/study-check-ins/edit'
+    }
+  ];
+
+  if (loading) {
+    return (
+      <div className="dashboard-loading">
+        <div className="spinner"></div>
+        <p>加载中...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-error">
+        <div className="error-icon">⚠️</div>
+        <p>{error}</p>
+        <button className="btn-retry" onClick={loadDashboardData}>
+          重新加载
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">数据总览</h1>
-      
-      {/* 数据统计卡片 */}
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="card-icon">
-            <FontAwesomeIcon icon={faUsers} size="2x" color="#3b82f6" />
-          </div>
-          <div className="card-content">
-            <h3 className="stat-title">总用户数</h3>
-            <p className="stat-value">{stats.userCount.toLocaleString()}</p>
-            <p className="stat-change positive">
-              <FontAwesomeIcon icon="fa-arrow-up" /> 8.2% <span className="text-sm">较上月</span>
-            </p>
-          </div>
+    <div className="dashboard">
+      {/* 欢迎区域 */}
+      <div className="dashboard-welcome">
+        <div className="welcome-content">
+          <h1 className="welcome-title">
+            {getCurrentGreeting()}，{username}！
+          </h1>
+          <p className="welcome-subtitle">
+            {role === 'ADMIN' ? '管理后台' : '个人工作台'}
+          </p>
         </div>
-        
-        <div className="stat-card">
-          <div className="card-icon">
-            <FontAwesomeIcon icon={faNewspaper} size="2x" color="#10b981" />
-          </div>
-          <div className="card-content">
-            <h3 className="stat-title">文章总数</h3>
-            <p className="stat-value">{stats.articleCount.toLocaleString()}</p>
-            <p className="stat-change positive">
-              <FontAwesomeIcon icon="fa-arrow-up" /> 12.5% <span className="text-sm">较上月</span>
-            </p>
-          </div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="card-icon">
-            <FontAwesomeIcon icon={faEye} size="2x" color="#f59e0b" />
-          </div>
-          <div className="card-content">
-            <h3 className="stat-title">总访问量</h3>
-            <p className="stat-value">{stats.viewCount.toLocaleString()}</p>
-            <p className="stat-change negative">
-              <FontAwesomeIcon icon="fa-arrow-down" /> 3.1% <span className="text-sm">较上月</span>
-            </p>
-          </div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="card-icon">
-            <FontAwesomeIcon icon={faComment} size="2x" color="#8b5cf6" />
-          </div>
-          <div className="card-content">
-            <h3 className="stat-title">评论总数</h3>
-            <p className="stat-value">{stats.commentCount.toLocaleString()}</p>
-            <p className="stat-change positive">
-              <FontAwesomeIcon icon="fa-arrow-up" /> 15.8% <span className="text-sm">较上月</span>
-            </p>
-          </div>
+        <div className="welcome-actions">
+          {quickActions.map((action, index) => (
+            <Link key={index} to={action.link} className="quick-btn">
+              <span className="quick-btn-icon">{action.icon}</span>
+              <span className="quick-btn-text">{action.label}</span>
+            </Link>
+          ))}
         </div>
       </div>
-      
-      {/* 数据图表 */}
-      <div className="chart-container">
-        <div className="chart-header">
-          <h2 className="chart-title">文章发布趋势</h2>
-          <div className="chart-controls">
-            <select className="chart-filter">
-              <option value="month">按月</option>
-              <option value="week">按周</option>
-              <option value="day">按日</option>
-            </select>
-          </div>
-        </div>
-        
-        <div className="chart-content">
-          <Bar 
-            data={chartData} 
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  position: 'top',
-                },
-                title: {
-                  display: false
-                }
-              },
-              scales: {
-                y: {
-                  beginAtZero: true
-                }
-              }
-            }}
-          />
-        </div>
+
+      {/* 数据统计模块 */}
+      <div className="dashboard-modules">
+        {managementModules.map((module, index) => (
+          <Link
+            key={index}
+            to={module.link}
+            className="module-card"
+          >
+            <div className="module-icon" style={{ color: module.color }}>
+              {module.icon}
+            </div>
+            <div className="module-info">
+              <div className="module-name">{module.name}</div>
+              <div className="module-count">{module.count} 条</div>
+            </div>
+            <div className="module-arrow">→</div>
+          </Link>
+        ))}
       </div>
-      
-      {/* 最近活动 */}
-      <div className="activity-container">
-        <h2 className="activity-title">最近活动</h2>
-        <div className="activity-list">
-          {/* 模拟活动数据 */}
-          <div className="activity-item">
-            <div className="activity-icon bg-blue-100">
-              <FontAwesomeIcon icon="fa-user-plus" color="#3b82f6" />
-            </div>
-            <div className="activity-content">
-              <p className="activity-text">
-                <span className="font-medium">新用户注册</span>: 张三
-              </p>
-              <p className="activity-time">5分钟前</p>
-            </div>
+
+      {/* 系统信息 */}
+      <div className="dashboard-footer">
+        <div className="system-info-card">
+          <div className="info-item">
+            <span className="info-label">当前角色</span>
+            <span className="info-value">
+              {role === 'ADMIN' ? '👑 管理员' : '👤 普通用户'}
+            </span>
           </div>
-          
-          <div className="activity-item">
-            <div className="activity-icon bg-green-100">
-              <FontAwesomeIcon icon="fa-file-plus" color="#10b981" />
-            </div>
-            <div className="activity-content">
-              <p className="activity-text">
-                <span className="font-medium">新文章发布</span>: 《考研英语备考攻略》
-              </p>
-              <p className="activity-time">30分钟前</p>
-            </div>
+          <div className="info-item">
+            <span className="info-label">数据总量</span>
+            <span className="info-value">
+              {Object.values(stats).reduce((a, b) => a + b, 0)} 条
+            </span>
           </div>
-          
-          <div className="activity-item">
-            <div className="activity-icon bg-purple-100">
-              <FontAwesomeIcon icon="fa-comment" color="#8b5cf6" />
-            </div>
-            <div className="activity-content">
-              <p className="activity-text">
-                <span className="font-medium">新评论</span>: 李四 评论了 《考研政治重点》
-              </p>
-              <p className="activity-time">2小时前</p>
-            </div>
+          <div className="info-item">
+            <span className="info-label">当前时间</span>
+            <span className="info-value">
+              {new Date().toLocaleString('zh-CN', { 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </span>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

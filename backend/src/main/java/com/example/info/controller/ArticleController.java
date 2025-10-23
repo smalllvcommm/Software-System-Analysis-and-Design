@@ -15,10 +15,10 @@ import java.util.List;
 /**
  * 文章管理控制器
  * 处理与文章相关的HTTP请求，提供RESTful API接口
- * 路径前缀：/api/admin/articles
+ * 路径前缀：/api/articles
  */
 @RestController // 标识为REST风格控制器，返回JSON格式数据
-@RequestMapping("/api/admin/articles") // 定义基础请求路径
+@RequestMapping("/api/articles") // 定义基础请求路径
 public class ArticleController {
 
     // 文章服务层对象，通过构造函数注入
@@ -50,8 +50,8 @@ public class ArticleController {
      * @param id 路径中的文章ID
      * @return 包含删除结果的响应对象
      */
-    @DeleteMapping("/{id}") // 处理DELETE请求，映射路径：/api/admin/articles/{id}
-    public ResponseResult<String> deleteArticle(@PathVariable Long id) {
+    @DeleteMapping("/{id}") // 处理DELETE请求，映射路径：/api/articles/{id}
+    public ResponseResult<Void> deleteArticle(@PathVariable Long id) {
         // 调用服务层删除文章
         articleService.deleteArticle(id);
         // 返回成功响应，包含删除成功消息

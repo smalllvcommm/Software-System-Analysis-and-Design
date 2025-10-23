@@ -6,10 +6,10 @@ import {
     updateArticle,
     fetchArticles,
 
-    createSubject,
-    deleteSubject,
-    updateSubject,
-    fetchSubjects,
+    createCategory,
+    deleteCategory,
+    updateCategory,
+    fetchCategories,
 
     createKnowledgeCard,
     deleteKnowledgeCard,
@@ -26,18 +26,58 @@ import {
     updateTodo,
     fetchTodos,
 
+    createMemo,
+    deleteMemo,
+    updateMemo,
+    fetchMemos,
 
+    createStudyCheckIn,
+    deleteStudyCheckIn,
+    updateStudyCheckIn,
+    fetchStudyCheckIns,
 
-    fetchAllSubjects,
+    createAudio,
+    deleteAudio,
+    updateAudio,
+    fetchAudios,
+
+    createWebsite,
+    deleteWebsite,
+    updateWebsite,
+    fetchWebsites,
+
+    createExpense,
+    deleteExpense,
+    updateExpense,
+    fetchExpenses,
+
+    createTravelPlan,
+    deleteTravelPlan,
+    updateTravelPlan,
+    fetchTravelPlans,
+
+    createVideo,
+    deleteVideo,
+    updateVideo,
+    fetchVideos,
+
+    fetchAllCategories,
     fetchAllArticles,
     fetchAllTags
 } from '../api/index';
 import type { 
     Article,
     KnowledgeCard,
-    Subject,
+    Category,
     Tag,
-    Todo
+    Todo,
+    Memo,
+    StudyCheckIn,
+    Audio,
+    Website,
+    Expense,
+    TravelPlan,
+    Video
 } from '../types/index';
 
 // 文章列表配置
@@ -51,7 +91,7 @@ export const articleListConfig: ListConfig<Article> = {
         updateItem: updateArticle,
         fetchList: fetchArticles,
         
-        fetchAllSubjects: fetchAllSubjects,
+        fetchAllCategories: fetchAllCategories,
         fetchAllTags: fetchAllTags,
 
     },
@@ -85,9 +125,9 @@ export const articleListConfig: ListConfig<Article> = {
             ]
         },
         {
-            key: 'subjectId',
+            key: 'categoryId',
             type: 'select',
-            label: '学科',
+            label: '分类',
             defaultValue: 0,
             options: []
         },
@@ -110,15 +150,7 @@ export const articleListConfig: ListConfig<Article> = {
             ]
         }
     ],
-    actions: [
-        {
-        key: 'edit',
-        label: '编辑',
-        isLink: true,
-        linkGenerator: (item: Article) => `/admin/list/articles/edit/${item.id}`,
-        className: 'edit-btn',
-        }
-    ],
+    actions: [], // 编辑功能已整合到标题链接中
     type: 'article'
 };
 
@@ -133,23 +165,21 @@ export const knowledgeCardListConfig: ListConfig<KnowledgeCard> = {
         updateItem: updateKnowledgeCard,
         fetchList: fetchKnowledgeCards,
 
-        fetchAllSubjects: fetchAllSubjects,
+        fetchAllCategories: fetchAllCategories,
         fetchAllArticles: fetchAllArticles
     },
     columns: [
-        { key: 'title', title: '标题', width: '35%' },
-        { key: 'subject', title: '学科', width: '25%' },
+        { key: 'title', title: '标题', width: '40%' },
+        { key: 'category', title: '分类', width: '20%' },
         { key: 'difficulty', title: '难度', width: '10%' },
-        { key: 'createdTime', title: '创建时间', width: '10%' },
-        { key: 'sortOrder', title: '排序号', width: '10%' },
-        { key: 'article', title: '文章', width: '10%' }
-
+        { key: 'createdTime', title: '创建时间', width: '15%' },
+        { key: 'sortOrder', title: '排序号', width: '15%' }
     ],
     filters: [
         {
-            key: 'subjectId',
+            key: 'categoryId',
             type: 'select',
-            label: '学科',
+            label: '分类',
             defaultValue: 0,
             options: []
         },
@@ -178,31 +208,6 @@ export const knowledgeCardListConfig: ListConfig<KnowledgeCard> = {
     type: 'other'
 };
 
-// 学科列表配置
-export const subjectListConfig: ListConfig<Subject> = {
-    title: '学科',
-    itemIdKey: 'id',
-    createLink: '/admin/subjects/edit',
-    api: {
-        createItem: createSubject,
-        deleteItem: deleteSubject,
-        updateItem: updateSubject,
-        fetchList: fetchSubjects,
-    },
-    columns: [
-        { key: 'name', title: '名称', width: '100%' },
-    ],
-    filters: [],
-    actions: [
-        {
-            key: 'edit',
-            label: '编辑',
-            onClick: (item: Subject): void => console.log('编辑分类:', item),
-            className: 'edit-btn'
-        }
-    ],
-    type: 'other'
-};
 
 // 标签列表配置
 export const tagListConfig: ListConfig<Tag> = {
@@ -217,28 +222,12 @@ export const tagListConfig: ListConfig<Tag> = {
     },
     columns: [
         { key: 'id', title: 'ID', width: '10%' },
-        { key: 'name', title: '标签名称', width: '40%' },
-        { key: 'color', title: '标签颜色', width: '15%' },
-        { key: 'articleCount', title: '使用数量', width: '15%' },
-        { key: 'createdTime', title: '创建时间', width: '20%' }
+        { key: 'name', title: '标签名称', width: '30%' },
+        { key: 'color', title: '标签颜色', width: '20%' },
+        { key: 'createdTime', title: '创建时间', width: '40%' }
     ],
-    filters: [
-        {
-            key: 'searchText',
-            type: 'text',
-            label: '搜索',
-            placeholder: '输入标签名称搜索'
-        }
-    ],
-    actions: [
-        {
-            key: 'edit',
-            label: '编辑',
-            isLink: true,
-            linkGenerator: (item: Tag): string => `/admin/tags/edit/${item.id}`,
-            className: 'edit-btn'
-        }
-    ],
+    filters: [],
+    actions: [],
     type: 'other'
 };
 
@@ -311,12 +300,195 @@ export const todoListConfig: ListConfig<Todo> = {
     type: 'other'
 };
 
+// 备忘录列表配置
+export const memoListConfig: ListConfig<Memo> = {
+    title: '备忘录',
+    itemIdKey: 'id',
+    createLink: '/admin/list/memos/edit',
+    api: {
+        createItem: createMemo,
+        deleteItem: deleteMemo,
+        updateItem: updateMemo,
+        fetchList: fetchMemos,
+    },
+    columns: [
+        { key: 'title', title: '标题', width: '40%' },
+        { key: 'content', title: '内容', width: '40%' },
+        { key: 'createdTime', title: '创建时间', width: '20%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 音频列表配置
+export const audioListConfig: ListConfig<Audio> = {
+    title: '音频',
+    itemIdKey: 'id',
+    createLink: '/admin/list/audios/edit',
+    api: {
+        createItem: createAudio,
+        deleteItem: deleteAudio,
+        updateItem: updateAudio,
+        fetchList: fetchAudios,
+    },
+    columns: [
+        { key: 'title', title: '标题', width: '30%' },
+        { key: 'url', title: '音频链接', width: '40%' },
+        { key: 'duration', title: '时长', width: '15%' },
+        { key: 'createdTime', title: '创建时间', width: '15%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 视频列表配置
+export const videoListConfig: ListConfig<Video> = {
+    title: '视频',
+    itemIdKey: 'id',
+    createLink: '/admin/list/videos/edit',
+    api: {
+        createItem: createVideo,
+        deleteItem: deleteVideo,
+        updateItem: updateVideo,
+        fetchList: fetchVideos,
+    },
+    columns: [
+        { key: 'title', title: '标题', width: '30%' },
+        { key: 'url', title: '视频链接', width: '40%' },
+        { key: 'duration', title: '时长', width: '15%' },
+        { key: 'createdTime', title: '创建时间', width: '15%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 网站收藏列表配置
+export const websiteListConfig: ListConfig<Website> = {
+    title: '网站收藏',
+    itemIdKey: 'id',
+    createLink: '/admin/list/websites/edit',
+    api: {
+        createItem: createWebsite,
+        deleteItem: deleteWebsite,
+        updateItem: updateWebsite,
+        fetchList: fetchWebsites,
+    },
+    columns: [
+        { key: 'title', title: '网站名称', width: '25%' },
+        { key: 'url', title: '网址', width: '40%' },
+        { key: 'description', title: '描述', width: '20%' },
+        { key: 'createdTime', title: '创建时间', width: '15%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 支出记录列表配置
+export const expenseListConfig: ListConfig<Expense> = {
+    title: '支出记录',
+    itemIdKey: 'id',
+    createLink: '/admin/list/expenses/edit',
+    api: {
+        createItem: createExpense,
+        deleteItem: deleteExpense,
+        updateItem: updateExpense,
+        fetchList: fetchExpenses,
+    },
+    columns: [
+        { key: 'title', title: '标题', width: '25%' },
+        { key: 'amount', title: '金额', width: '15%' },
+        { key: 'category', title: '类别', width: '15%' },
+        { key: 'date', title: '日期', width: '20%' },
+        { key: 'description', title: '说明', width: '25%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 旅行计划列表配置
+export const travelPlanListConfig: ListConfig<TravelPlan> = {
+    title: '旅行计划',
+    itemIdKey: 'id',
+    createLink: '/admin/list/travelPlans/edit',
+    api: {
+        createItem: createTravelPlan,
+        deleteItem: deleteTravelPlan,
+        updateItem: updateTravelPlan,
+        fetchList: fetchTravelPlans,
+    },
+    columns: [
+        { key: 'destination', title: '目的地', width: '20%' },
+        { key: 'startDate', title: '开始日期', width: '15%' },
+        { key: 'endDate', title: '结束日期', width: '15%' },
+        { key: 'budget', title: '预算', width: '15%' },
+        { key: 'description', title: '描述', width: '35%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 学习打卡列表配置
+export const studyCheckInListConfig: ListConfig<StudyCheckIn> = {
+    title: '学习打卡',
+    itemIdKey: 'id',
+    createLink: '/admin/list/studyCheckIns/edit',
+    api: {
+        createItem: createStudyCheckIn,
+        deleteItem: deleteStudyCheckIn,
+        updateItem: updateStudyCheckIn,
+        fetchList: fetchStudyCheckIns,
+    },
+    columns: [
+        { key: 'category', title: '分类', width: '20%' },
+        { key: 'duration', title: '时长(分钟)', width: '15%' },
+        { key: 'content', title: '学习内容', width: '40%' },
+        { key: 'checkInDate', title: '日期', width: '25%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
+// 分类列表配置
+export const categoryListConfig: ListConfig<Category> = {
+    title: '分类',
+    itemIdKey: 'id',
+    createLink: '/admin/list/categories/edit',
+    api: {
+        createItem: createCategory,
+        deleteItem: deleteCategory,
+        updateItem: updateCategory,
+        fetchList: fetchCategories,
+    },
+    columns: [
+        { key: 'id', title: 'ID', width: '10%' },
+        { key: 'name', title: '名称', width: '30%' },
+        { key: 'description', title: '描述', width: '60%' }
+    ],
+    filters: [],
+    actions: [],
+    type: 'other'
+};
+
 export const listConfigMap = {
     articles: articleListConfig,
     cards: knowledgeCardListConfig,
-    subjects: subjectListConfig,
+    categories: categoryListConfig,
     tags: tagListConfig,
-    todos: todoListConfig
+    todos: todoListConfig,
+    memos: memoListConfig,
+    audios: audioListConfig,
+    videos: videoListConfig,
+    websites: websiteListConfig,
+    expenses: expenseListConfig,
+    travelPlans: travelPlanListConfig,
+    studyCheckIns: studyCheckInListConfig
 };
 
 export type ListType = keyof typeof listConfigMap;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/travel-plans")
+@RequestMapping("/api/travel-plans")
 @RequiredArgsConstructor
 public class TravelPlanController {
     private final TravelPlanService travelPlanService;
@@ -25,7 +25,7 @@ public class TravelPlanController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteTravelPlan(@PathVariable Long id) {
+    public ResponseResult<Void> deleteTravelPlan(@PathVariable Long id) {
         travelPlanService.deleteTravelPlan(id);
         return ResponseResult.success("删除成功");
     }

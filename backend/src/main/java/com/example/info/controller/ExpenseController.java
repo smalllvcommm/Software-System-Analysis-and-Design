@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/expenses")
+@RequestMapping("/api/expenses")
 @RequiredArgsConstructor
 public class ExpenseController {
     private final ExpenseService expenseService;
@@ -25,7 +25,7 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteExpense(@PathVariable Long id) {
+    public ResponseResult<Void> deleteExpense(@PathVariable Long id) {
         expenseService.deleteExpense(id);
         return ResponseResult.success("删除成功");
     }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/videos")
+@RequestMapping("/api/videos")
 @RequiredArgsConstructor
 public class VideoController {
     private final VideoService videoService;
@@ -25,7 +25,7 @@ public class VideoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteVideo(@PathVariable Long id) {
+    public ResponseResult<Void> deleteVideo(@PathVariable Long id) {
         videoService.deleteVideo(id);
         return ResponseResult.success("删除成功");
     }

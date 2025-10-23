@@ -1,23 +1,38 @@
 package com.example.info.entity;
+
 import jakarta.persistence.*;
-import jakarta.persistence.GenerationType;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class User {
-    @Id // 主键标识
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 主键自增策略
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50) // 非空、唯一
+    @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 100)
-    private String password; // 实际需加密存储
+    @Column(nullable = false, length = 255)
+    private String password; // BCrypt 加密存儲
 
-    @Column(nullable = false)
-    private String role;     // 角色：admin/user
+    @Column(unique = true, length = 100)
+    private String email;
 
+    @Column(nullable = false, length = 20)
+    private String role = "USER"; // 角色：ADMIN/USER
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdTime;
+
+    @LastModifiedDate
+    private LocalDateTime updatedTime;
 }

@@ -13,11 +13,6 @@ const PublicLayout = () => {
       <main className="main-content">
         <Outlet />
       </main>
-      
-      {/* 页脚 */}
-      <footer className="page-footer">
-        <p>© 2024 学习资源管理平台</p>
-      </footer>
     </div>
   );
 };

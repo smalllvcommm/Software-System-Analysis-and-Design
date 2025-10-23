@@ -44,26 +44,30 @@ export interface LoginResponseData {
 
 export type StoredUser = Omit<User, 'password'>;
 
-// 学科相关类型
-export interface Subject {
+// 分類相关类型（原 Subject，現改為 Category）
+export interface Category {
   id: number;
   name: string;
-  imageUrl: string;
-  description: string;
+  description?: string;
 }
 
-export interface SubjectFilterParams {
+export interface CategoryFilterParams {
   searchText?: string;
   page?: number;
   size?: number;
 }
 
-export interface SubjectEditModalProps {
+export interface CategoryEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  subject: Subject;
-  onSave: (subject: Partial<Subject>) => void;
+  category: Category;
+  onSave: (category: Partial<Category>) => void;
 }
+
+// 保留 Subject 作為 Category 的別名（向後兼容）
+export type Subject = Category;
+export type SubjectFilterParams = CategoryFilterParams;
+export type SubjectEditModalProps = CategoryEditModalProps;
 
 // 标签相关类型
 export interface Tag {
@@ -95,14 +99,14 @@ export interface Article {
   createdTime: string;
   updatedTime: string;
   views: number;
-  subject: Subject | null;
+  category: Category | null;  // 改為 category
   tags: Tag[];
 }
 
 export interface ArticleFilterParams {
   searchText?: string;
   status?: 'ALL' | 'PUBLISHED' | 'UNPUBLISHED';
-  subjectId?: number;
+  categoryId?: number;  // 改為 categoryId
   sortBy?: 'createdTime-desc' | 'createdTime-asc' | 'views-desc';
   visibility?: 'ALL' | 'PUBLIC' | 'PRIVATE';
   tagId?: number;
@@ -171,5 +175,157 @@ export interface TodoEditModalProps {
   onClose: () => void;
   todo: Todo;
   onSave: (todo: Partial<Todo>) => void;
+}
+
+// 備忘錄相关类型
+export interface Memo {
+  id: number;
+  title: string;
+  content: string;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface MemoFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  tagId?: number;
+  page?: number;
+  size?: number;
+}
+
+// 學習打卡相关类型
+export interface StudyCheckIn {
+  id: number;
+  title: string;
+  content: string;
+  hours: number;
+  date: string;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface StudyCheckInFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  size?: number;
+}
+
+// 音頻相关类型
+export interface Audio {
+  id: number;
+  title: string;
+  content: string;
+  audioUrl: string;
+  duration: number;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface AudioFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  tagId?: number;
+  page?: number;
+  size?: number;
+}
+
+// 網站收藏相关类型
+export interface Website {
+  id: number;
+  title: string;
+  content: string;
+  url: string;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface WebsiteFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  tagId?: number;
+  page?: number;
+  size?: number;
+}
+
+// 支出記錄相关类型
+export interface Expense {
+  id: number;
+  title: string;
+  content: string;
+  amount: number;
+  date: string;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface ExpenseFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  startDate?: string;
+  endDate?: string;
+  minAmount?: number;
+  maxAmount?: number;
+  page?: number;
+  size?: number;
+}
+
+// 旅行計劃相关类型
+export interface TravelPlan {
+  id: number;
+  title: string;
+  content: string;
+  destination: string;
+  startDate: string;
+  endDate: string;
+  budget: number;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface TravelPlanFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  destination?: string;
+  startDate?: string;
+  endDate?: string;
+  page?: number;
+  size?: number;
+}
+
+// 視頻相关类型
+export interface Video {
+  id: number;
+  title: string;
+  content: string;
+  videoUrl: string;
+  duration: number;
+  createdTime: string;
+  updatedTime: string;
+  category: Category | null;
+  tags: Tag[];
+}
+
+export interface VideoFilterParams {
+  searchText?: string;
+  categoryId?: number;
+  tagId?: number;
+  page?: number;
+  size?: number;
 }
     

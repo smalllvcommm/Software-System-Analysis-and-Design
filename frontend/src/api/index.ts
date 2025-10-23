@@ -11,18 +11,32 @@ import type {
   LoginResponseData,
   KnowledgeCard, 
   CardFilterParams,
-  Subject, 
-  SubjectFilterParams,
+  Category, 
+  CategoryFilterParams,
   Tag, 
   TagFilterParams,
   Todo, 
-  TodoFilterParams
+  TodoFilterParams,
+  Memo,
+  MemoFilterParams,
+  StudyCheckIn,
+  StudyCheckInFilterParams,
+  Audio,
+  AudioFilterParams,
+  Website,
+  WebsiteFilterParams,
+  Expense,
+  ExpenseFilterParams,
+  TravelPlan,
+  TravelPlanFilterParams,
+  Video,
+  VideoFilterParams
 } from '../types/index'; // 所有类型均从 index 导出
 
 // ------------------------------
 // 文章相关API
 // ------------------------------
-export const articleService = createCRUDService<Article, ArticleFilterParams>('/admin/articles');
+export const articleService = createCRUDService<Article, ArticleFilterParams>('/articles');
 
 export const {
   create: createArticle,
@@ -33,7 +47,7 @@ export const {
 } = articleService;
 
 export const fetchAllArticles = async () => {
-  const response = await apiClient.get<ApiResponse<Article[]>>(`/admin/articles/all`);
+  const response = await apiClient.get<ApiResponse<Article[]>>(`/articles/all`);
   return response.data;
 };
 
@@ -48,7 +62,7 @@ export const login = async (username: string, password: string) => {
 // ------------------------------
 // 知识卡片相关API
 // ------------------------------
-export const knowledgeCardService = createCRUDService<KnowledgeCard, CardFilterParams>('/admin/knowledgeCards');
+export const knowledgeCardService = createCRUDService<KnowledgeCard, CardFilterParams>('/knowledgeCards');
 
 export const {
   create: createKnowledgeCard,
@@ -59,27 +73,36 @@ export const {
 } = knowledgeCardService;
 
 // ------------------------------
-// 学科相关API
+// 分類相关API（原學科，現改為Category）
 // ------------------------------
-export const subjectService = createCRUDService<Subject, SubjectFilterParams>('/admin/subjects');
+export const categoryService = createCRUDService<Category, CategoryFilterParams>('/categories');
 
 export const {
-  create: createSubject,
-  delete: deleteSubject,
-  update: updateSubject,
-  fetchList: fetchSubjects,
-  fetchById: fetchSubjectById,
-} = subjectService;
+  create: createCategory,
+  delete: deleteCategory,
+  update: updateCategory,
+  fetchList: fetchCategories,
+  fetchById: fetchCategoryById,
+} = categoryService;
 
-export const fetchAllSubjects = async () => {
-  const response = await apiClient.get<ApiResponse<Subject[]>>(`/admin/subjects/all`);
+export const fetchAllCategories = async () => {
+  const response = await apiClient.get<ApiResponse<Category[]>>(`/categories/all`);
   return response.data;
 };
+
+// 向後兼容：保留 Subject 相關導出
+export const subjectService = categoryService;
+export const createSubject = createCategory;
+export const deleteSubject = deleteCategory;
+export const updateSubject = updateCategory;
+export const fetchSubjects = fetchCategories;
+export const fetchSubjectById = fetchCategoryById;
+export const fetchAllSubjects = fetchAllCategories;
 
 // ------------------------------
 // 标签相关API
 // ------------------------------
-export const tagService = createCRUDService<Tag, TagFilterParams>('/admin/tags');
+export const tagService = createCRUDService<Tag, TagFilterParams>('/tags');
 
 export const {
   create: createTag,
@@ -90,14 +113,14 @@ export const {
 } = tagService;
 
 export const fetchAllTags = async () => {
-  const response = await apiClient.get<ApiResponse<Tag[]>>(`/admin/tags/all`);
+  const response = await apiClient.get<ApiResponse<Tag[]>>(`/tags/all`);
   return response.data;
 };
 
 // ------------------------------
 // 待办事项相关API
 // ------------------------------
-export const todoService = createCRUDService<Todo, TodoFilterParams>('/admin/todos');
+export const todoService = createCRUDService<Todo, TodoFilterParams>('/todos');
 
 export const {
   create: createTodo,
@@ -106,3 +129,94 @@ export const {
   fetchList: fetchTodos,
   fetchById: fetchTodoById,
 } = todoService;
+
+// ------------------------------
+// 備忘錄相关API
+// ------------------------------
+export const memoService = createCRUDService<Memo, MemoFilterParams>('/memos');
+
+export const {
+  create: createMemo,
+  delete: deleteMemo,
+  update: updateMemo,
+  fetchList: fetchMemos,
+  fetchById: fetchMemoById,
+} = memoService;
+
+// ------------------------------
+// 學習打卡相关API
+// ------------------------------
+export const studyCheckInService = createCRUDService<StudyCheckIn, StudyCheckInFilterParams>('/study-check-ins');
+
+export const {
+  create: createStudyCheckIn,
+  delete: deleteStudyCheckIn,
+  update: updateStudyCheckIn,
+  fetchList: fetchStudyCheckIns,
+  fetchById: fetchStudyCheckInById,
+} = studyCheckInService;
+
+// ------------------------------
+// 音頻相关API
+// ------------------------------
+export const audioService = createCRUDService<Audio, AudioFilterParams>('/audios');
+
+export const {
+  create: createAudio,
+  delete: deleteAudio,
+  update: updateAudio,
+  fetchList: fetchAudios,
+  fetchById: fetchAudioById,
+} = audioService;
+
+// ------------------------------
+// 網站收藏相关API
+// ------------------------------
+export const websiteService = createCRUDService<Website, WebsiteFilterParams>('/websites');
+
+export const {
+  create: createWebsite,
+  delete: deleteWebsite,
+  update: updateWebsite,
+  fetchList: fetchWebsites,
+  fetchById: fetchWebsiteById,
+} = websiteService;
+
+// ------------------------------
+// 支出記錄相关API
+// ------------------------------
+export const expenseService = createCRUDService<Expense, ExpenseFilterParams>('/expenses');
+
+export const {
+  create: createExpense,
+  delete: deleteExpense,
+  update: updateExpense,
+  fetchList: fetchExpenses,
+  fetchById: fetchExpenseById,
+} = expenseService;
+
+// ------------------------------
+// 旅行計劃相关API
+// ------------------------------
+export const travelPlanService = createCRUDService<TravelPlan, TravelPlanFilterParams>('/travel-plans');
+
+export const {
+  create: createTravelPlan,
+  delete: deleteTravelPlan,
+  update: updateTravelPlan,
+  fetchList: fetchTravelPlans,
+  fetchById: fetchTravelPlanById,
+} = travelPlanService;
+
+// ------------------------------
+// 視頻相关API
+// ------------------------------
+export const videoService = createCRUDService<Video, VideoFilterParams>('/videos');
+
+export const {
+  create: createVideo,
+  delete: deleteVideo,
+  update: updateVideo,
+  fetchList: fetchVideos,
+  fetchById: fetchVideoById,
+} = videoService;

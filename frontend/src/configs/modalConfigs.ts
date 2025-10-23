@@ -36,15 +36,15 @@ export const articleModalConfig: Partial<ModalProps> = {
       },
     },
     {
-      key: 'subjectId',
-      label: '所属学科',
+      key: 'categoryId',
+      label: '所属分类',
       type: 'select',
-      placeholder: '请选择学科',
+      placeholder: '请选择分类',
       required: true,
-      options: [], // 动态加载学科列表（由列表页/API填充）
+      options: [], // 动态加载分类列表
       
       
-      apiMethod: 'fetchAllSubjects', // 自定义API方法名
+      apiMethod: 'fetchAllCategories', // 自定义API方法名
       labelKey: 'name',
       valueKey: 'id',
       
@@ -86,37 +86,7 @@ export const articleModalConfig: Partial<ModalProps> = {
   ],
 };
 
-// ------------------------------
-// 学科模态框配置（subject）
-// ------------------------------
-export const subjectModalConfig: Partial<ModalProps> = {
-  ...baseModalConfig,
-  title: '编辑学科',
-  size: 'medium',
-  fields: [
-    {
-      key: 'name',
-      label: '学科名称',
-      type: 'text',
-      placeholder: '请输入学科名称（最多50字）',
-      required: true,
-      width: '100%',
-      validation: (value) => {
-        if (!value?.trim()) return '学科名称不能为空';
-        if (value.length > 50) return '学科名称不能超过50个字符';
-        return null;
-      },
-    },
-    {
-      key: 'description',
-      label: '学科描述',
-      type: 'textarea',
-      placeholder: '请输入学科描述（可选）',
-      width: '100%',
-      rows: 4,
-    },
-  ],
-};
+// 学科模态框配置已移除，使用分类（categoryModalConfig）替代
 
 // ------------------------------
 // 知识卡片模态框配置（knowledgeCard）
@@ -135,19 +105,19 @@ export const knowledgeCardModalConfig: Partial<ModalProps> = {
       width: '100%',
     },
     {
-      key: 'subjectId',
-      label: '所属学科',
+      key: 'categoryId',
+      label: '所属分类',
       type: 'select',
-      placeholder: '请选择学科',
+      placeholder: '请选择分类',
       required: true,
       
       
-      apiMethod: 'fetchAllSubjects',
+      apiMethod: 'fetchAllCategories',
       labelKey: 'name',
       valueKey: 'id',
       
       
-      options: [], // 动态加载学科列表
+      options: [], // 动态加载分类列表
       width: '50%',
     },
     {
@@ -287,11 +257,323 @@ export const todoModalConfig: Partial<ModalProps> = {
   ],
 };
 
+// 备忘录模态框配置
+export const memoModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑备忘录',
+  size: 'medium',
+  fields: [
+    {
+      key: 'title',
+      label: '标题',
+      type: 'text',
+      placeholder: '请输入备忘录标题',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'content',
+      label: '内容',
+      type: 'textarea',
+      placeholder: '请输入备忘录内容',
+      required: true,
+      width: '100%',
+      rows: 6,
+    },
+  ],
+};
+
+// 音频模态框配置
+export const audioModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑音频',
+  size: 'medium',
+  fields: [
+    {
+      key: 'title',
+      label: '音频标题',
+      type: 'text',
+      placeholder: '请输入音频标题',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'url',
+      label: '音频链接',
+      type: 'text',
+      placeholder: '请输入音频链接',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'duration',
+      label: '时长',
+      type: 'text',
+      placeholder: '例如: 03:45',
+      width: '50%',
+    },
+    {
+      key: 'description',
+      label: '描述',
+      type: 'textarea',
+      placeholder: '请输入音频描述（可选）',
+      width: '100%',
+      rows: 3,
+    },
+  ],
+};
+
+// 视频模态框配置
+export const videoModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑视频',
+  size: 'medium',
+  fields: [
+    {
+      key: 'title',
+      label: '视频标题',
+      type: 'text',
+      placeholder: '请输入视频标题',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'url',
+      label: '视频链接',
+      type: 'text',
+      placeholder: '请输入视频链接',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'duration',
+      label: '时长',
+      type: 'text',
+      placeholder: '例如: 12:30',
+      width: '50%',
+    },
+    {
+      key: 'description',
+      label: '描述',
+      type: 'textarea',
+      placeholder: '请输入视频描述（可选）',
+      width: '100%',
+      rows: 3,
+    },
+  ],
+};
+
+// 网站收藏模态框配置
+export const websiteModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑网站收藏',
+  size: 'medium',
+  fields: [
+    {
+      key: 'title',
+      label: '网站名称',
+      type: 'text',
+      placeholder: '请输入网站名称',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'url',
+      label: '网址',
+      type: 'text',
+      placeholder: 'https://...',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'category',
+      label: '分类',
+      type: 'text',
+      placeholder: '例如: 工具、学习、娱乐',
+      width: '50%',
+    },
+    {
+      key: 'description',
+      label: '描述',
+      type: 'textarea',
+      placeholder: '请输入网站描述（可选）',
+      width: '100%',
+      rows: 3,
+    },
+  ],
+};
+
+// 支出记录模态框配置
+export const expenseModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑支出记录',
+  size: 'medium',
+  fields: [
+    {
+      key: 'title',
+      label: '支出标题',
+      type: 'text',
+      placeholder: '请输入支出标题',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'amount',
+      label: '金额',
+      type: 'number',
+      placeholder: '请输入金额',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'category',
+      label: '类别',
+      type: 'text',
+      placeholder: '例如: 餐饮、交通、娱乐',
+      width: '50%',
+    },
+    {
+      key: 'date',
+      label: '日期',
+      type: 'date',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'description',
+      label: '说明',
+      type: 'textarea',
+      placeholder: '请输入支出说明（可选）',
+      width: '100%',
+      rows: 3,
+    },
+  ],
+};
+
+// 旅行计划模态框配置
+export const travelPlanModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑旅行计划',
+  size: 'large',
+  fields: [
+    {
+      key: 'destination',
+      label: '目的地',
+      type: 'text',
+      placeholder: '请输入目的地',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'startDate',
+      label: '开始日期',
+      type: 'date',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'endDate',
+      label: '结束日期',
+      type: 'date',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'budget',
+      label: '预算',
+      type: 'number',
+      placeholder: '请输入预算',
+      width: '50%',
+    },
+    {
+      key: 'description',
+      label: '计划描述',
+      type: 'textarea',
+      placeholder: '请输入旅行计划详情',
+      width: '100%',
+      rows: 6,
+    },
+  ],
+};
+
+// 学习打卡模态框配置
+export const studyCheckInModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑学习打卡',
+  size: 'medium',
+  fields: [
+    {
+      key: 'category',
+      label: '分类',
+      type: 'text',
+      placeholder: '请输入分类名称',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'duration',
+      label: '时长(分钟)',
+      type: 'number',
+      placeholder: '请输入学习时长',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'date',
+      label: '日期',
+      type: 'date',
+      required: true,
+      width: '50%',
+    },
+    {
+      key: 'content',
+      label: '学习内容',
+      type: 'textarea',
+      placeholder: '请输入学习内容',
+      required: true,
+      width: '100%',
+      rows: 5,
+    },
+  ],
+};
+
+// 分类模态框配置
+export const categoryModalConfig: Partial<ModalProps> = {
+  ...baseModalConfig,
+  title: '编辑分类',
+  size: 'medium',
+  fields: [
+    {
+      key: 'name',
+      label: '分类名称',
+      type: 'text',
+      placeholder: '请输入分类名称',
+      required: true,
+      width: '100%',
+    },
+    {
+      key: 'description',
+      label: '描述',
+      type: 'textarea',
+      placeholder: '请输入分类描述（可选）',
+      width: '100%',
+      rows: 3,
+    },
+  ],
+};
+
 // 模态框配置映射表（实体类型 -> 配置）
 export const ModalConfigMap = {
   articles: articleModalConfig,
-  subjects: subjectModalConfig,
+  categories: categoryModalConfig,
   cards: knowledgeCardModalConfig,
   tags: tagModalConfig,
   todos: todoModalConfig,
-};
+  memos: memoModalConfig,
+  audios: audioModalConfig,
+  videos: videoModalConfig,
+  websites: websiteModalConfig,
+  expenses: expenseModalConfig,
+  travelPlans: travelPlanModalConfig,
+  studyCheckIns: studyCheckInModalConfig,
+} as const;

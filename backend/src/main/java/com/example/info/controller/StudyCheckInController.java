@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/study-checkins")
+@RequestMapping("/api/study-check-ins")
 @RequiredArgsConstructor
 public class StudyCheckInController {
     private final StudyCheckInService studyCheckInService;
@@ -25,7 +25,7 @@ public class StudyCheckInController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteStudyCheckIn(@PathVariable Long id) {
+    public ResponseResult<Void> deleteStudyCheckIn(@PathVariable Long id) {
         studyCheckInService.deleteStudyCheckIn(id);
         return ResponseResult.success("删除成功");
     }

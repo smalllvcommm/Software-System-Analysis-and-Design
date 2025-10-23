@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faPlus, faTrash, faCog} from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus, faTrash, faSearch} from '@fortawesome/free-solid-svg-icons';
 import './css/List.css';
 
 import type { FilterConfig, ListConfig } from '../types/te/List';
@@ -59,6 +59,24 @@ export default function List<T>({
 	const [localModalConfig, setLocalModalConfig] = useState(modalConfig);
 	const [cachedOptions, setCachedOptions] = useState<Record<string, { label: string; value: any }[]>>({});
 	const [loadingDynamicOptions, setLoadingDynamicOptions] = useState(false);
+	
+	// 标签搜索状态
+	const [tagSearchText, setTagSearchText] = useState('');
+	const [showTagDropdown, setShowTagDropdown] = useState(false);
+	const tagDropdownRef = useRef<HTMLDivElement>(null);
+
+	// 点击外部关闭标签下拉框
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (tagDropdownRef.current && !tagDropdownRef.current.contains(event.target as Node)) {
+				setShowTagDropdown(false);
+			}
+		};
+		if (showTagDropdown) {
+			document.addEventListener('mousedown', handleClickOutside);
+			return () => document.removeEventListener('mousedown', handleClickOutside);
+		}
+	}, [showTagDropdown]);
 
 	// 模态框相关逻辑
 	const openModal = async (item: T | null = null) => {
@@ -151,7 +169,7 @@ export default function List<T>({
 		if (searchText.trim()) params.searchText = searchText.trim();
 
 		Object.entries(filterValues).forEach(([key, value]) => {
-			if (value != null && value !== 'all') params[key] = value;
+			if (value != null && value !== 'all' && value !== '') params[key] = value;
 		});
 
 		const response = await api.fetchList(params);
@@ -174,18 +192,18 @@ export default function List<T>({
 	const loadDynamicFilters = useCallback(async () => {
 	setLoadingFilters(true);
 	try {
-		if (api.fetchAllSubjects) {
-		const subjectResponse = await api.fetchAllSubjects();
-		const subjectData = Array.isArray(subjectResponse) 
-			? subjectResponse 
-			: (subjectResponse?.data ?? []);
+		if (api.fetchAllCategories) {
+		const categoryResponse = await api.fetchAllCategories();
+		const categoryData = Array.isArray(categoryResponse) 
+			? categoryResponse 
+			: (categoryResponse?.data ?? []);
 		
-		if (Array.isArray(subjectData)) {
-			const subjectOptions = subjectData.map((sub: any) => ({
-			label: sub.name || '未命名学科',
-			value: sub.id ?? sub.name,
+		if (Array.isArray(categoryData)) {
+			const categoryOptions = categoryData.map((cat: any) => ({
+			label: cat.name || '未命名分类',
+			value: cat.id ?? cat.name,
 			}));
-			setDynamicFilterOptions(prev => ({ ...prev, subjectId: subjectOptions }));
+			setDynamicFilterOptions(prev => ({ ...prev, categoryId: categoryOptions }));
 		}
 		}
 
@@ -232,15 +250,23 @@ export default function List<T>({
 	// 筛选器变更处理
 	const handleFilterChange = (key: string, value: any) => {
 		setFilterValues(prev => ({ ...prev, [key]: value }));
-		setPage(0); // 筛选条件变更时重置到第一页
 		if (key === 'sortBy') {
-		setSortBy(value);
+			setSortBy(value);
 		}
+		// 不自动触发搜索，等用户点击"应用筛选"按钮
 	};
 
 	// 执行筛选搜索
 	const handleSearch = () => {
+		setPage(0); // 重置到第一页
 		loadData();
+	};
+
+	// 按回车键搜索
+	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			handleSearch();
+		}
 	};
 
 	const resetFilters = () => {
@@ -248,7 +274,8 @@ export default function List<T>({
 		const initialFilters = getInitialFilterValues(filters);
 		setFilterValues(initialFilters);
 		setPage(0);
-		loadData();
+		// 重置后立即加载
+		setTimeout(() => loadData(), 0);
 	};
 
 	// 统一的删除处理函数
@@ -281,27 +308,35 @@ export default function List<T>({
 	// 渲染辅助函数
 	const renderFilter = (filter: FilterConfig<T>) => {
 		const key = filter.key as string;
-		const value = filterValues[key] ?? filter.defaultValue;
+		const value = filterValues[key] ?? filter.defaultValue ?? '';
 
 		if (filter.type === 'select') {
-    		const options = dynamicFilterOptions[key] || filter.options || [];
+			// 优先使用动态加载的选项，否则使用静态选项
+			const options = dynamicFilterOptions[key] || filter.options || [];
+			
+			// 特殊处理：标签筛选器添加搜索功能
+			if (key === 'tagId' && options.length > 0) {
+				return renderTagFilterWithSearch(key, value, options);
+			}
 
-		return (
-			<div className="filter-item" key={key}>
-				<label className="filter-label">{filter.label}</label>
-				<select
-					className="filter-select"
-					value={String(value ?? '')}
-					onChange={(e) => handleFilterChange(key, e.target.value)}
-					disabled={loading || loadingFilters}
-				>
-					<option value="all">全部</option>
-					{options?.map(option => (
-					<option key={option.value} value={option.value}>{option.label}</option>
-					))}
-				</select>
-			</div>
-		);
+			return (
+				<div className="filter-item" key={key}>
+					<label className="filter-label">{filter.label}</label>
+					<select
+						className="filter-select"
+						value={String(value || '')}
+						onChange={(e) => handleFilterChange(key, e.target.value)}
+						disabled={loading || loadingFilters}
+					>
+						<option value="">全部</option>
+						{options?.map((option: any) => (
+							<option key={option.value} value={option.value}>
+								{option.label}
+							</option>
+						))}
+					</select>
+				</div>
+			);
 		}
 
 		if (filter.type === 'text') {
@@ -323,15 +358,114 @@ export default function List<T>({
 		return null;
 	};
 
-	const safeRender = (value: any) => {
+	// 状态和可见性映射
+	const statusMap: Record<string, string> = {
+		'PUBLISHED': '已发布',
+		'UNPUBLISHED': '草稿',
+		'DRAFT': '草稿',
+		'ARCHIVED': '已归档'
+	};
+
+	const visibilityMap: Record<string, string> = {
+		'PUBLIC': '公开',
+		'PRIVATE': '私有',
+		'PROTECTED': '受保护'
+	};
+
+	const safeRender = (value: any, key?: string) => {
 		if (value === null || value === undefined) return '-';
+		
+		// 处理状态字段
+		if (key === 'status' && typeof value === 'string') {
+			return statusMap[value] || value;
+		}
+		
+		// 处理可见性字段
+		if (key === 'visibility' && typeof value === 'string') {
+			return visibilityMap[value] || value;
+		}
+		
 		if (typeof value === 'object') {
-		return value.name || value.title || '[对象]';
+			return value.name || value.title || '[对象]';
 		}
 		if (Array.isArray(value)) {
-		return value.length > 0 ? value.join(', ') : '空数组';
+			return value.length > 0 ? value.join(', ') : '空数组';
 		}
 		return value;
+	};
+
+	// 渲染带搜索功能的标签筛选器
+	const renderTagFilterWithSearch = (key: string, value: any, options: any[]) => {
+		// 过滤标签选项
+		const filteredOptions = options.filter((option: any) =>
+			option.label.toLowerCase().includes(tagSearchText.toLowerCase())
+		);
+
+		// 获取当前选中的标签名称
+		const selectedTag = options.find((opt: any) => String(opt.value) === String(value));
+		const displayText = selectedTag ? selectedTag.label : '全部';
+
+		return (
+			<div className="filter-item filter-item-searchable" key={key} ref={tagDropdownRef}>
+				<label className="filter-label">标签</label>
+				<div className="searchable-select-wrapper">
+					<div 
+						className="searchable-select-trigger"
+						onClick={() => setShowTagDropdown(!showTagDropdown)}
+					>
+						<span>{displayText}</span>
+						<span className="dropdown-arrow">▼</span>
+					</div>
+					
+					{showTagDropdown && (
+						<div className="searchable-dropdown">
+							{/* 搜索框 */}
+							<div className="dropdown-search">
+								<FontAwesomeIcon icon={faSearch} className="search-icon" />
+								<input
+									type="text"
+									placeholder="搜索标签..."
+									value={tagSearchText}
+									onChange={(e) => setTagSearchText(e.target.value)}
+									onClick={(e) => e.stopPropagation()}
+								/>
+							</div>
+							
+							{/* 选项列表 */}
+							<div className="dropdown-options">
+								<div 
+									className={`dropdown-option ${!value || value === '' ? 'selected' : ''}`}
+									onClick={() => {
+										handleFilterChange(key, '');
+										setShowTagDropdown(false);
+										setTagSearchText('');
+									}}
+								>
+									全部
+								</div>
+								{filteredOptions.length > 0 ? (
+									filteredOptions.map((option: any) => (
+										<div 
+											key={option.value}
+											className={`dropdown-option ${String(value) === String(option.value) ? 'selected' : ''}`}
+											onClick={() => {
+												handleFilterChange(key, option.value);
+												setShowTagDropdown(false);
+												setTagSearchText('');
+											}}
+										>
+											{option.label}
+										</div>
+									))
+								) : (
+									<div className="dropdown-empty">无匹配标签</div>
+								)}
+							</div>
+						</div>
+					)}
+				</div>
+			</div>
+		);
 	};
 
 	// 路由切换时重置状态
@@ -368,42 +502,47 @@ export default function List<T>({
 	// 组件渲染
 	return (
 		<div className="list-page-container">
-			<div className="content-header">
-				<h1 className="page-title">{title}</h1>
-				<div className="header-actions">
-					{/* 导航按钮 */}
-					<Link to="/admin/list/articles" className="action-btn secondary-btn">
-					<span>文章</span>
-					</Link>
-		
-					<Link to="/admin/list/subjects" className="action-btn secondary-btn">
-					<span>分类</span>
-					</Link>
-
-					<Link to="/admin/list/tags" className="action-btn secondary-btn">
-					<span>标签</span>
-					</Link>
-
-					<Link to="/admin/list/cards" className="action-btn secondary-btn">
-					<span>卡片</span>
-					</Link>
-						
-					<Link to="/admin/list/todos" className="action-btn secondary-btn">
-					<span>待办</span>
-					</Link>
-
-					<Link to="/admin/list/recycle" className="action-btn secondary-btn">
-					<span>回收站</span>
-					</Link>
-
-					{/* 新建按钮 */}
-					{type === 'article' ? (
-						<Link to="/admin/list/articles/edit" className="action-btn primary-btn">
-						<FontAwesomeIcon icon={faPlus} />
-						<span>新建{title}</span>
+		<div className="content-header">
+			<h1 className="page-title">{title}</h1>
+			<div className="header-actions">
+				{/* 导航按钮 - 文章相关页面显示 */}
+				{type === 'article' && (
+					<>
+						<Link to="/admin/list/articles" className="action-btn secondary-btn">
+							<span>文章</span>
 						</Link>
-					) : (
-						<button
+						<Link to="/admin/list/categories" className="action-btn secondary-btn">
+							<span>分类</span>
+						</Link>
+						<Link to="/admin/list/tags" className="action-btn secondary-btn">
+							<span>标签</span>
+						</Link>
+					</>
+				)}
+				
+				{/* 分类和标签页面也显示文章按钮 */}
+				{type === 'other' && (title === '标签' || title === '分类') && (
+					<>
+						<Link to="/admin/list/articles" className="action-btn secondary-btn">
+							<span>文章</span>
+						</Link>
+						<Link to="/admin/list/categories" className="action-btn secondary-btn">
+							<span>分类</span>
+						</Link>
+						<Link to="/admin/list/tags" className="action-btn secondary-btn">
+							<span>标签</span>
+						</Link>
+					</>
+				)}
+
+				{/* 新建按钮 */}
+				{type === 'article' ? (
+					<Link to="/admin/list/articles/edit" className="action-btn primary-btn">
+					<FontAwesomeIcon icon={faPlus} />
+					<span>新建{title}</span>
+					</Link>
+				) : (
+					<button
 						className="action-btn primary-btn"
 						onClick={() => openModal(null)}
 						disabled={loading}
@@ -419,20 +558,17 @@ export default function List<T>({
 				{/* 1. 筛选区域 */}
 				<div className="filter-panel">
 				<div className="filter-row">
-					{/* 搜索框区域 */}
-					{/* 搜索框区域 */}
-					<div className="search-group">
-					<input
-						type="text"
-						placeholder={`输入关键词搜索`}
-						value={searchText}
-						// 仅更新搜索文本，不触发任何筛选或查询
-						onChange={(e) => setSearchText(e.target.value)}
-						// 仅在失去焦点时触发查询
-						onBlur={handleSearch}
-						disabled={loading}
-					/>
-					</div>
+				{/* 搜索框区域 */}
+				<div className="search-group">
+				<input
+					type="text"
+					placeholder={`输入关键词，按回车搜索`}
+					value={searchText}
+					onChange={(e) => setSearchText(e.target.value)}
+					onKeyPress={handleKeyPress}
+					disabled={loading}
+				/>
+				</div>
 					
 					{/* 筛选条件区域 */}
 					<div className="filter-controls">
@@ -482,9 +618,17 @@ export default function List<T>({
 										>
 											{columns.map(column => (
 										<td key={column.key as string} className="table-cell">
-										{column.render
+										{/* 如果是标题列且是文章类型，添加编辑链接 */}
+										{column.key === 'title' && type === 'article' ? (
+											<Link 
+												to={`/admin/list/articles/edit/${item[itemIdKey]}`}
+												className="title-link"
+											>
+												{safeRender(item[column.key as keyof T], column.key as string)}
+											</Link>
+										) : column.render
 											? column.render(item)
-											: safeRender(item[column.key as keyof T])
+											: safeRender(item[column.key as keyof T], column.key as string)
 										}
 										</td>
 										))}
@@ -519,20 +663,6 @@ export default function List<T>({
 												</button>
 											);
 											})}
-
-											<button
-											key="settings"
-											onClick={() => {
-												openModal(item);
-												onAction?.('settings', item);
-											}}
-											className="action-btn settings-btn"
-											disabled={loading}
-											title="编辑属性"
-											>
-											<FontAwesomeIcon icon={faCog} />
-											<span>设置</span>
-											</button>
 
 											<button
 											key="delete"

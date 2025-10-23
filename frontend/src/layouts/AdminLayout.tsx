@@ -1,11 +1,15 @@
 // layouts/AdminLayout.tsx
 import { Outlet } from 'react-router-dom';
+import Navigation from '../components/Navigation';
 import AdminSidebar from '../components/AdminSidebar';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
   return (
     <div className="admin-layout">
+      {/* 顶部导航栏 */}
+      <Navigation />
+      
       {/* 侧边栏 */}
       <AdminSidebar />
       

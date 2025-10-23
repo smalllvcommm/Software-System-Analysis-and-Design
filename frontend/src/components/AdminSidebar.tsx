@@ -5,8 +5,14 @@ import {
   faDashboard, 
   faFileAlt, 
   faFolder, 
-  faTag, 
-  faCheckSquare 
+  faTag,
+  faStickyNote,
+  faClipboardCheck,
+  faMusic,
+  faGlobe,
+  faMoneyBill,
+  faPlane,
+  faVideo
 } from '@fortawesome/free-solid-svg-icons';
 import './css/AdminSidebar.css';
 
@@ -16,8 +22,14 @@ const AdminSidebar = () => {
   // 管理后台导航项配置
   const sidebarItems = [
     { path: '/admin/dashboard', icon: faDashboard, label: '仪表盘' },
-    { path: '/admin/list/articles', icon: faFileAlt, label: '管理' },
-
+    { path: '/admin/list/articles', icon: faFileAlt, label: '文章管理' },
+    { path: '/admin/list/memos', icon: faStickyNote, label: '备忘录' },
+    { path: '/admin/list/studyCheckIns', icon: faClipboardCheck, label: '学习打卡' },
+    { path: '/admin/list/audios', icon: faMusic, label: '音频管理' },
+    { path: '/admin/list/videos', icon: faVideo, label: '视频管理' },
+    { path: '/admin/list/websites', icon: faGlobe, label: '网站收藏' },
+    { path: '/admin/list/expenses', icon: faMoneyBill, label: '支出记录' },
+    { path: '/admin/list/travelPlans', icon: faPlane, label: '旅行计划' },
   ];
 
   return (

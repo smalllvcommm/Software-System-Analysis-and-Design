@@ -13,6 +13,9 @@ import AdminLayout from '../layouts/AdminLayout.tsx';
 import Home from '../pages/public/Home.tsx';
 import About from '../pages/public/About.tsx';
 import Login from '../pages/public/Login.tsx';
+import Register from '../pages/public/Register.tsx';
+import Profile from '../pages/Profile.tsx';
+import Workspace from '../pages/Workspace.tsx';
 import Nomatch from '../pages/public/Nomatch.tsx';
 
 // 学习部分组件
@@ -32,10 +35,17 @@ import ArticleDetail from '../pages/study/ArticleDetail.tsx';
 // 后台部分组件
 import Dashboard from '../pages/admin/Dashboard.tsx';
 import ListPage from '../pages/admin/ListPage';
-import AriticleEdit from '../pages/admin/ArticleEdit.tsx';
-// import GenericDetail from '../pages/admin/GenericDetail.tsx';
-// import UserProfile from '../pages/admin/UserProfile.tsx';
-// import Settings from '../pages/admin/Settings.tsx';
+import ArticleEdit from '../pages/admin/ArticleEdit.tsx';
+import MemoEdit from '../pages/admin/MemoEdit.tsx';
+import AudioEdit from '../pages/admin/AudioEdit.tsx';
+import VideoEdit from '../pages/admin/VideoEdit.tsx';
+import WebsiteEdit from '../pages/admin/WebsiteEdit.tsx';
+import ExpenseEdit from '../pages/admin/ExpenseEdit.tsx';
+import TravelPlanEdit from '../pages/admin/TravelPlanEdit.tsx';
+import StudyCheckInEdit from '../pages/admin/StudyCheckInEdit.tsx';
+import CategoryEdit from '../pages/admin/CategoryEdit.tsx';
+import TagEdit from '../pages/admin/TagEdit.tsx';
+
 
 // 公共路由
 const publicRoutes: RouteObject = {
@@ -44,9 +54,13 @@ const publicRoutes: RouteObject = {
   children: [
     { index: true, element: <Home /> },
     { path: 'login', element: <Login /> },
+    { path: 'register', element: <Register /> },
+    { path: 'workspace', element: <Workspace /> },
+    { path: 'profile', element: <Profile /> },
     { path: 'about', element: <About /> },
-    { path: '*', element: <Nomatch /> },
-    { path: 'articles/:id', element: <ArticleDetail /> }
+    { path: 'articles', element: <ArticleList /> },
+    { path: 'articles/:id', element: <ArticleDetail /> },
+    { path: '*', element: <Nomatch /> }
   ]
 };
 
@@ -83,21 +97,25 @@ const studyRoutes: RouteObject = {
 // 后台路由
 const adminRoutes: RouteObject = {
   path: '/admin',
-  element: <AuthGuard requiredRole="admin"><AdminLayout /></AuthGuard>,
+  element: <AuthGuard requiredRole="ADMIN"><AdminLayout /></AuthGuard>,
   children: [
+    { index: true, element: <Dashboard /> },
     { path: 'dashboard', element: <Dashboard /> },
     
     // 资源管理列表页
     { path: 'list/:type', element: <ListPage /> },
-    // { path: 'list/articles/edit/:id?', element: <AriticleEdit /> },
-    { path: 'list/articles/edit/:id?', element: <AriticleEdit /> },
-
-    // // 系统管理
-    // { path: 'profile', element: <UserProfile /> },
-    // { path: 'settings', element: <Settings /> },
     
-    // 后台重定向
-    // { path: '*/*', element: <Navigate to="/admin" replace /> }
+    // 各实体的编辑页面
+    { path: 'list/articles/edit/:id?', element: <ArticleEdit /> },
+    { path: 'list/memos/edit/:id?', element: <MemoEdit /> },
+    { path: 'list/audios/edit/:id?', element: <AudioEdit /> },
+    { path: 'list/videos/edit/:id?', element: <VideoEdit /> },
+    { path: 'list/websites/edit/:id?', element: <WebsiteEdit /> },
+    { path: 'list/expenses/edit/:id?', element: <ExpenseEdit /> },
+    { path: 'list/travel-plans/edit/:id?', element: <TravelPlanEdit /> },
+    { path: 'list/study-checkins/edit/:id?', element: <StudyCheckInEdit /> },
+    { path: 'list/categories/edit/:id?', element: <CategoryEdit /> },
+    { path: 'list/tags/edit/:id?', element: <TagEdit /> },
   ]
 };
 

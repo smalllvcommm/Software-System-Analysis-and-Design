@@ -7,8 +7,8 @@ import { useEffect, useRef } from 'react';
  * @param handler - 点击外部时触发的回调
  * @param listenCapturing - 是否在捕获阶段监听事件（默认 true）
  */
-export function useOutsideClick(
-  ref: React.RefObject<HTMLElement>,
+export function useOutsideClick<T extends HTMLElement = HTMLElement>(
+  ref: React.RefObject<T | null>,
   handler: (event: MouseEvent) => void,
   listenCapturing = true
 ) {

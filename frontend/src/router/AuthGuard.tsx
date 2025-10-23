@@ -33,17 +33,16 @@ export function AuthGuard({ requiredRole, children }: AuthGuardProps) {
 
   // 3. 权限不足：重定向到403页，提示具体所需角色
   if (!hasRole(requiredRole)) {
-    // 角色名称映射（确保覆盖所有ValidRole情况）
+    // 角色名称映射
     const roleNameMap: Record<ValidRole, string> = {
-      admin: '管理员',
-      user: '用户',
-      guest: '访客'
+      ADMIN: '管理員',
+      USER: '用戶'
     };
 
     return <Navigate 
       to="/403" 
       state={{ 
-        message: `需要${roleNameMap[requiredRole]}权限`, // 动态显示所需角色名称
+        message: `需要${roleNameMap[requiredRole]}权限`,
         from: location.pathname 
       }} 
       replace 

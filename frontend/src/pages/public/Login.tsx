@@ -25,10 +25,10 @@ const Login = () => {
     setError(authError);
   }, [authError]);
 
-  // 如果已登录，重定向到首页或来源页
+  // 如果已登录，重定向到工作空间
   useEffect(() => {
     if (isAuthenticated) {
-      const from = (location.state as { from?: string })?.from || '/';
+      const from = (location.state as { from?: string })?.from || '/workspace';
       navigate(from, { replace: true });
     }
   }, [isAuthenticated, navigate, location.state]);
@@ -75,37 +75,41 @@ const Login = () => {
           {/* 登录表单 */}
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <FontAwesomeIcon icon={faUser} />用户名
-              <input
-                type="text"
-                placeholder="用户名"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                disabled={isSubmitting}
-                required
-                className="form-input"
-              />
+              <div className="input-wrapper">
+                <FontAwesomeIcon icon={faUser} className="input-icon" />
+                <input
+                  type="text"
+                  placeholder="用户名"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="form-input with-icon"
+                />
+              </div>
             </div>
 
             <div className="form-group">
-              <FontAwesomeIcon icon={faLock} />密码
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="密码"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={isSubmitting}
-                required
-                className="form-input"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="toggle-password"
-                aria-label={showPassword ? "显示密码" : "隐藏密码"}
-              >
-                <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} className="input-icon" />
-              </button>
+              <div className="input-wrapper">
+                <FontAwesomeIcon icon={faLock} className="input-icon" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="密码"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="form-input with-icon"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="toggle-password"
+                  aria-label={showPassword ? "隐藏密码" : "显示密码"}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                </button>
+              </div>
             </div>
 
             <button 

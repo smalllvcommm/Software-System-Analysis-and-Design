@@ -1,162 +1,400 @@
-.about-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+/* About Page */
+.about-page {
+  min-height: 100vh;
+  background: #ffffff;
 }
 
-.about-header {
+/* Hero Section */
+.about-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 100px 20px 80px;
   text-align: center;
-  margin-bottom: 3rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e2e8f0;
 }
 
-.about-header h1 {
-  color: #2c3e50;
-  margin: 0 0 0.5rem;
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.about-header p {
-  color: #64748b;
+.about-hero p {
+  font-size: 1.3rem;
   margin: 0;
+  opacity: 0.95;
+}
+
+/* Content Container */
+.about-content {
+  padding: 80px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Section Styles */
+.about-section {
+  margin-bottom: 80px;
+}
+
+.about-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-icon {
+  font-size: 3.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.about-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin: 0 0 30px;
+}
+
+.lead-text {
+  font-size: 1.2rem;
+  color: #4b5563;
+  line-height: 1.8;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 30px;
+}
+
+.about-section p {
+  color: #6b7280;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+/* Features List */
+.features-list {
+  max-width: 900px;
+  margin: 40px auto 0;
+}
+
+.feature-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  padding: 30px;
+  background: #f9fafb;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.feature-row:hover {
+  background: #f3f4f6;
+  transform: translateX(10px);
+}
+
+.feature-row .feature-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.feature-content {
+  flex: 1;
+}
+
+.feature-content h3 {
+  font-size: 1.3rem;
+  color: #1f2937;
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.feature-content p {
+  color: #6b7280;
+  margin: 0;
+  text-align: left;
+  line-height: 1.6;
+}
+
+/* Technology Section */
+.tech-section {
+  background: #f9fafb;
+  padding: 60px 40px;
+  border-radius: 16px;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.tech-card {
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.tech-card h3 {
+  font-size: 1.4rem;
+  color: #667eea;
+  margin: 0 0 20px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.tech-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tech-card li {
+  color: #6b7280;
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.tech-card li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+}
+
+.tech-card li strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Values Section */
+.values-section {
+  padding: 60px 40px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.value-card {
+  text-align: center;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+}
+
+.value-number {
+  font-size: 3rem;
+  font-weight: 800;
+  opacity: 0.3;
+  margin-bottom: 15px;
+}
+
+.value-card h3 {
+  font-size: 1.5rem;
+  margin: 0 0 15px;
+  font-weight: 600;
+}
+
+.value-card p {
+  margin: 0;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+/* Contact Section */
+.contact-section {
+  background: #f9fafb;
+  padding: 60px 40px;
+  border-radius: 16px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.contact-item {
+  text-align: center;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.contact-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.contact-item h4 {
+  font-size: 1.2rem;
+  color: #1f2937;
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+
+.contact-item p {
+  color: #667eea;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* CTA Section */
+.about-cta {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.about-cta h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 15px;
+}
+
+.about-cta p {
+  font-size: 1.3rem;
+  margin: 0 0 35px;
+  opacity: 0.95;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 16px 40px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
   font-size: 1.1rem;
 }
 
-.about-content {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
+.btn-primary {
+  background: white;
+  color: #667eea;
 }
 
-/* 功能区块样式 */
-.feature-section h2,
-.subjects-section h2,
-.author-section h2,
-.license-section h2 {
-  color: #2c3e50;
-  margin-top: 0;
-  border-left: 4px solid #3498db;
-  padding-left: 0.8rem;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-}
-
-.feature-card {
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
-}
-
-.feature-card:hover {
-  transform: translateY(-5px);
-}
-
-.feature-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #3498db;
-}
-
-.feature-card h3 {
-  color: #2c3e50;
-  margin: 0 0 0.5rem;
-}
-
-.feature-card p {
-  color: #64748b;
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-/* 学科列表样式 */
-.subjects-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.subjects-list span {
-  background-color: #f1f5f9;
-  color: #334155;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
-
-/* 作者信息样式 */
-.author-info {
-  background-color: #f8fafc;
-  padding: 1.5rem;
-  border-radius: 8px;
-}
-
-.author-info p {
-  color: #334155;
-  line-height: 1.6;
-}
-
-.contact-links {
-  margin-top: 1rem;
-}
-
-.contact-links a {
-  color: #3498db;
-  text-decoration: none;
-}
-
-.contact-links a:hover {
-  text-decoration: underline;
-}
-
-/* 许可信息样式 */
-.license-section p {
-  color: #334155;
-  line-height: 1.6;
-}
-
-.github-link {
-  display: inline-block;
-  margin-top: 1rem;
-  color: #3498db;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.github-link:hover {
-  text-decoration: underline;
-}
-
-/* 页脚样式 */
-.about-footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e2e8f0;
-  text-align: center;
-}
-
-.about-footer p {
-  color: #64748b;
-  margin: 0 0 1rem;
-}
-
-.back-link {
-  display: inline-block;
-  color: #3498db;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border: 1px solid #3498db;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.back-link:hover {
-  background-color: #3498db;
+.btn-secondary {
+  background: transparent;
   color: white;
+  border: 2px solid white;
+}
+
+.btn-secondary:hover {
+  background: white;
+  color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-hero p {
+    font-size: 1.1rem;
+  }
+
+  .about-section h2 {
+    font-size: 2rem;
+  }
+
+  .lead-text {
+    font-size: 1.1rem;
+  }
+
+  .feature-row {
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px 20px;
+  }
+
+  .tech-grid,
+  .values-grid,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-section,
+  .values-section,
+  .contact-section {
+    padding: 40px 20px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    padding: 60px 20px;
+  }
+
+  .about-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-content {
+    padding: 50px 20px;
+  }
+
+  .section-icon {
+    font-size: 2.5rem;
+  }
+
+  .value-number {
+    font-size: 2rem;
+  }
 }

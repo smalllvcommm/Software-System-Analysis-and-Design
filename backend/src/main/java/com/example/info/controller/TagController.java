@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/tags")
+@RequestMapping("/api/tags")
 @RequiredArgsConstructor
 public class TagController {
     private final TagService tagService;
@@ -21,7 +21,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteTag(@PathVariable Long id) {
+    public ResponseResult<Void> deleteTag(@PathVariable Long id) {
         tagService.deleteTag(id);
         return ResponseResult.success("删除成功");
     }
@@ -36,9 +36,35 @@ public class TagController {
     }
 
     @GetMapping
-    public ResponseResult<List<Tag>> fetchTags() {
+    public ResponseResult<?> fetchTags(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String searchText
+    ) {
         List<Tag> tags = tagService.findAllTags();
-        return ResponseResult.success(tags);
+        
+        // 如果有搜索文本，进行过滤
+        if (searchText != null && !searchText.trim().isEmpty()) {
+            String search = searchText.toLowerCase();
+            tags = tags.stream()
+                .filter(t -> t.getName().toLowerCase().contains(search))
+                .collect(java.util.stream.Collectors.toList());
+        }
+        
+        // 构建分页响应
+        int total = tags.size();
+        int start = page * size;
+        int end = Math.min(start + size, total);
+        List<Tag> pageContent = tags.subList(Math.min(start, total), end);
+        
+        java.util.Map<String, Object> response = new java.util.HashMap<>();
+        response.put("content", pageContent);
+        response.put("totalElements", total);
+        response.put("totalPages", (int) Math.ceil((double) total / size));
+        response.put("number", page);
+        response.put("size", size);
+        
+        return ResponseResult.success(response);
     }
 
     @GetMapping("/all")

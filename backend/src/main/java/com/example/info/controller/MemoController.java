@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/memos")
+@RequestMapping("/api/memos")
 @RequiredArgsConstructor
 public class MemoController {
     private final MemoService memoService;
@@ -25,7 +25,7 @@ public class MemoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteMemo(@PathVariable Long id) {
+    public ResponseResult<Void> deleteMemo(@PathVariable Long id) {
         memoService.deleteMemo(id);
         return ResponseResult.success("删除成功");
     }

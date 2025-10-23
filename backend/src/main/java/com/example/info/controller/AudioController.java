@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin/audios")
+@RequestMapping("/api/audios")
 @RequiredArgsConstructor
 public class AudioController {
     private final AudioService audioService;
@@ -25,7 +25,7 @@ public class AudioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseResult<String> deleteAudio(@PathVariable Long id) {
+    public ResponseResult<Void> deleteAudio(@PathVariable Long id) {
         audioService.deleteAudio(id);
         return ResponseResult.success("删除成功");
     }
