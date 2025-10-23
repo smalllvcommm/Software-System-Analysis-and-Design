@@ -1,0 +1,30 @@
+/* 公共布局容器 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 主内容区 */
+.main-content {
+  flex: 1;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 页脚样式 */
+.page-footer {
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  text-align: center;
+  border-top: 1px solid #e9ecef;
+  margin-top: auto;
+}
+
+.page-footer p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+}

@@ -1,0 +1,57 @@
+/* Sidebar组件样式 */
+.sidebar {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.sidebar-widget {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.sidebar-widget:hover {
+  transform: translateY(-3px);
+}
+
+.widget-title {
+  font-size: 16px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.widget-title svg {
+  width: 18px;
+  height: 18px;
+  color: var(--secondary-color);
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+  .sidebar {
+    order: -1; /* 在中等屏幕上 sidebar 显示在文章列表上方 */
+    width: 100%;
+    flex: none;
+  }
+  
+  .sidebar-widget {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    gap: 20px;
+  }
+}
+    

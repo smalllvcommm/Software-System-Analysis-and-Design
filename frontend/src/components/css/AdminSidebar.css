@@ -1,0 +1,56 @@
+/* 管理侧边栏容器 */
+.admin-sidebar {
+  width: 240px;
+  background-color: #2d3436;
+  color: white;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900; /* 低于导航栏 */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 侧边栏头部 */
+.admin-sidebar .sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid #393e46;
+  margin-bottom: 0;
+}
+
+.admin-sidebar .sidebar-header h2 {
+  margin: 0;
+  font-size: 20px;
+  color: #f1f1f1;
+}
+
+/* 侧边栏导航 */
+.admin-sidebar .sidebar-nav {
+  padding-top: 20px;
+}
+
+/* 侧边栏链接 */
+.admin-sidebar .sidebar-link {
+  display: flex;
+  align-items: center;
+  color: #b2b2b2;
+  padding: 12px 25px;
+  transition: all 0.2s ease;
+}
+
+.admin-sidebar .sidebar-link:hover:not(.active) {
+  background-color: #393e46;
+  color: #f1f1f1;
+}
+
+.admin-sidebar .sidebar-link.active {
+  background-color: #0984e3;
+  color: white;
+}
+
+/* 图标样式 */
+.sidebar-icon {
+  margin-right: 10px;
+  width: 18px;
+  text-align: center;
+}

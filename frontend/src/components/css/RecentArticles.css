@@ -1,0 +1,57 @@
+/* RecentArticles组件样式 */
+.recent-articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.recent-articles-list li {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+  transition: transform 0.2s ease;
+}
+
+.recent-articles-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.recent-articles-list li:hover {
+  transform: translateX(5px);
+}
+
+.article-link {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.article-link .article-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: var(--transition);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.article-link:hover .article-title {
+  color: var(--secondary-color);
+}
+
+.article-link .article-date {
+  font-size: 12px;
+  color: var(--text-lighter);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.article-link .article-date::before {
+  content: '📅';
+  font-size: 10px;
+}
+    

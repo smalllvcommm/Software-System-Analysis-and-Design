@@ -1,0 +1,17 @@
+{
+  "files": [], // 根配置无需直接包含文件，由子配置管理
+  "references": [
+    { "path": "./tsconfig.app.json" },   // 应用代码配置（React 组件等）
+    { "path": "./tsconfig.node.json" }   // Node 环境配置（Vite 配置等）
+  ],
+  "compilerOptions": {
+    // 根配置仅定义公共选项（子配置可继承或覆盖）
+    "target": "ESNext",                // 目标 JS 版本（支持最新特性）
+    "module": "ESNext",                // 模块系统（支持 ESM）
+    "moduleResolution": "Bundler",     // 优化 bundler 场景（Vite/Rollup）
+    "esModuleInterop": true,           // 兼容 CommonJS 模块
+    "forceConsistentCasingInFileNames": true, // 文件名大小写敏感
+    "strict": true,                    // 开启严格类型检查（推荐）
+    "skipLibCheck": true               // 跳过 .d.ts 文件检查（提升编译速度）
+  }
+}

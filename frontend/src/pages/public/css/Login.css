@@ -1,0 +1,207 @@
+/* 登录页面整体布局 */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f2f5;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* 登录容器 */
+.login-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* 登录卡片 */
+.login-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 36px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* 登录头部 */
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-header h2 {
+  margin: 0 0 12px 0;
+  color: #1a1a1a;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.login-header p {
+  margin: 0;
+  color: #666666;
+  font-size: 14px;
+}
+
+/* 错误提示 */
+.login-error {
+  background-color: #fff1f1;
+  color: #d92121;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* 表单样式 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 调整表单组间距 */
+}
+
+.form-group {
+  position: relative; 
+  width: 100%;
+  max-width: 320px; /* 可根据需求调整输入框宽度 */
+  margin: 0 auto;   /* 让输入框水平居中（可选） */
+}
+
+.input-icon {
+  position: absolute;
+  left: -5px;          /* 调整与输入框左侧间距 */
+  top: 200%;           
+  transform: translateY(-50%); 
+  color: #999;         /* 图标颜色，可根据主题调整 */
+  font-size: 16px;     /* 图标大小，匹配输入框 */
+}
+.form-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px; /* 左侧内边距给图标让位 */
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #999;
+  box-shadow: 0 0 0 2px rgba(153, 153, 153, 0.1);
+}
+
+.form-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* 密码切换按钮 - 修复遮挡问题 */
+.toggle-password {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: #666;
+}
+
+/* 登录按钮 */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #1677ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background-color: #0f62d9;
+}
+
+.login-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.login-btn:disabled {
+  background-color: #8cc5ff;
+  cursor: not-allowed;
+}
+
+/* 登录页脚 */
+.login-footer {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.login-footer p {
+  margin: 0 0 16px 0;
+  color: #666666;
+  font-size: 14px;
+}
+
+.back-link {
+  color: #1677ff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #0f62d9;
+  text-decoration: underline;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px;
+  }
+  
+  .login-header h2 {
+    font-size: 20px;
+  }
+  
+  .form-input, .login-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+  
+  .form-input {
+    padding-right: 40px;
+  }
+}

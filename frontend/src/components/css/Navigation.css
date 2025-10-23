@@ -1,0 +1,84 @@
+/* 导航栏基础样式 */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000; /* 确保导航栏在最上层 */
+}
+
+/* 左侧 Logo 和首页链接 */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+/* 导航链接基础样式 */
+.nav-link {
+  color: #333333;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-link:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.nav-link.active {
+  color: #2c6ecb;
+  font-weight: bold;
+}
+
+.home-link {
+  font-size: 18px;
+}
+
+/* 右侧导航区域 */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 导航组样式 */
+.nav-group {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.group-label {
+  color: #666;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+/* 管理链接特殊样式 */
+.admin-link {
+  margin-left: 15px;
+  color: #d9363e;
+}
+
+.admin-link.active {
+  color: #b40009;
+}
+
+/* 链接图标 */
+.link-icon {
+  margin-right: 5px;
+}

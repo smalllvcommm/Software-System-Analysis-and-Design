@@ -1,0 +1,162 @@
+.about-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.about-header h1 {
+  color: #2c3e50;
+  margin: 0 0 0.5rem;
+}
+
+.about-header p {
+  color: #64748b;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* 功能区块样式 */
+.feature-section h2,
+.subjects-section h2,
+.author-section h2,
+.license-section h2 {
+  color: #2c3e50;
+  margin-top: 0;
+  border-left: 4px solid #3498db;
+  padding-left: 0.8rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3498db;
+}
+
+.feature-card h3 {
+  color: #2c3e50;
+  margin: 0 0 0.5rem;
+}
+
+.feature-card p {
+  color: #64748b;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* 学科列表样式 */
+.subjects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.subjects-list span {
+  background-color: #f1f5f9;
+  color: #334155;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+/* 作者信息样式 */
+.author-info {
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.author-info p {
+  color: #334155;
+  line-height: 1.6;
+}
+
+.contact-links {
+  margin-top: 1rem;
+}
+
+.contact-links a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.contact-links a:hover {
+  text-decoration: underline;
+}
+
+/* 许可信息样式 */
+.license-section p {
+  color: #334155;
+  line-height: 1.6;
+}
+
+.github-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+}
+
+/* 页脚样式 */
+.about-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.about-footer p {
+  color: #64748b;
+  margin: 0 0 1rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: #3498db;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid #3498db;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  background-color: #3498db;
+  color: white;
+}

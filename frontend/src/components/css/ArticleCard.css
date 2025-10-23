@@ -1,0 +1,128 @@
+/* ArticleCard组件样式 */
+.article-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.article-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.article-card:hover .article-image img {
+  transform: scale(1.05);
+}
+
+.default-cover {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: var(--text-lighter);
+  font-weight: bold;
+}
+
+.article-category {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 1;
+  text-transform: capitalize;
+}
+
+.article-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-title {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.article-title a {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.8em; /* 两行文字高度 */
+}
+
+.article-title a:hover {
+  color: var(--secondary-color);
+}
+
+.article-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: auto; /* 推到容器底部 */
+  flex-wrap: wrap;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
+
+.tag {
+  background-color: var(--bg-light);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.tag:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.more-tags {
+  font-size: 12px;
+  color: var(--text-lighter);
+  display: flex;
+  align-items: center;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .article-image {
+    height: 160px;
+  }
+  
+  .article-title {
+    font-size: 1.1rem;
+  }
+}
+    

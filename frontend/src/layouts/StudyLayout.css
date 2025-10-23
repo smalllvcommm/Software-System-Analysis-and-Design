@@ -1,0 +1,30 @@
+/* 学习布局容器 */
+.study-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 学习内容容器 */
+.study-container {
+  display: flex;
+  flex: 1;
+  margin-top: 60px; /* 导航栏高度 */
+  height: calc(100vh - 60px - 50px); /* 视窗高度 - 导航栏高度 - 页脚高度 */
+}
+
+/* 学习主内容区 */
+.study-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+  background-color: white;
+}
+
+/* 确保页脚在底部 */
+.study-layout .page-footer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

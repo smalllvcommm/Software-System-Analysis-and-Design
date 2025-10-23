@@ -1,0 +1,28 @@
+/* 热门标签样式 */
+.popular-tags .tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.popular-tags .tag-item {
+  background-color: var(--bg-light);
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 13px;
+  color: var(--text-light);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.popular-tags .tag-item:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.popular-tags .tag-count {
+  margin-left: 4px;
+  font-size: 11px;
+  opacity: 0.8;
+}

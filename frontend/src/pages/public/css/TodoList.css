@@ -1,0 +1,156 @@
+/* src/components/css/TodoList.css */
+
+/* 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 预留顶部导航栏空间（70px高度 + 15px间距） */
+body {
+    background-color: #f5f7fa;
+  color: #333;
+}
+
+/* 待办清单容器 */
+.todo-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 标题样式 */
+.todo-list h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+}
+
+/* 添加表单样式 */
+.todo-list form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.todo-list input[type="text"] {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.todo-list input[type="text"]:focus {
+  outline: none;
+  border-color: #4d90fe;
+  box-shadow: 0 0 0 2px rgba(77, 144, 254, 0.2);
+}
+
+.todo-list button[type="submit"] {
+  padding: 12px 24px;
+  background-color: #4d90fe;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.todo-list button[type="submit"]:hover:not(:disabled) {
+  background-color: #357ae8;
+}
+
+.todo-list button[type="submit"]:disabled {
+  background-color: #b3d1ff;
+  cursor: not-allowed;
+}
+
+/* 待办列表容器 */
+.todo-items {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* 空状态和加载状态 */
+.todo-items p {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+/* 单个待办项 */
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f1f1;
+  transition: background-color 0.2s;
+}
+
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.todo-item:hover {
+  background-color: #fafafa;
+}
+
+/* 复选框样式 */
+.todo-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #4d90fe;
+}
+
+/* 待办文本 */
+.todo-item span {
+  flex: 1;
+  margin: 0 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  transition: color 0.3s, text-decoration-color 0.3s;
+}
+
+.todo-item span[style*="line-through"] {
+  color: #888;
+  text-decoration-color: #bbb;
+}
+
+/* 删除按钮 */
+.todo-item button {
+  padding: 6px 12px;
+  background-color: #f8f9fa;
+  color: #dc3545;
+  border: 1px solid #f1f3f5;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.todo-item button:hover:not(:disabled) {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.todo-item button:disabled {
+  color: #d3d3d3;
+  cursor: not-allowed;
+}
