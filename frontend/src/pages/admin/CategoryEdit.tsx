@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { categoryService } from '../../api';
-import type { Category } from '../../types';
+import { categoryService } from '../../api/apiServices';
+import type { Category } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const CategoryEdit = () => {

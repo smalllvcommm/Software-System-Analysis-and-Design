@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { tagService } from '../../api';
-import type { Tag } from '../../types';
+import { tagService } from '../../api/apiServices';
+import type { Tag } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const TagEdit = () => {

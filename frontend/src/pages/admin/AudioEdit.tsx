@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { audioService } from '../../api';
-import type { Audio } from '../../types';
+import { audioService } from '../../api/apiServices';
+import type { Audio } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const AudioEdit = () => {

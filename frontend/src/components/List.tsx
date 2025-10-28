@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faPlus, faTrash, faSearch} from '@fortawesome/free-solid-svg-icons';
 import './css/List.css';
 
-import type { FilterConfig, ListConfig } from '../types/te/List';
-import type { ModalProps } from '../types/te/Modal';
+import type { FilterConfig, ListConfig } from '../types/uiTypes';
+import type { ModalProps } from '../types/modalTypes';
 import Modal from './Modal';
 
 const getInitialFilterValues = (filters: FilterConfig<any>[]) => {

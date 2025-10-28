@@ -1,0 +1,154 @@
+/* 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* 全屏容器 - 居中显示内容 */
+.not-found-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 内容卡片 - 白色背景+阴影 */
+.not-found-content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 40px 60px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* 错误图标 - 橙色警告色 */
+.error-icon {
+  color: #ff9800; /* 橙色图标，突出警告感 */
+  margin-bottom: 24px;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.error-icon:hover {
+  transform: scale(1.05); /* 轻微放大效果 */
+}
+
+/* 错误代码 (404) - 大号粗体 */
+.error-code {
+  font-size: 6rem;
+  font-weight: 800;
+  color: #333;
+  line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: -2px;
+}
+
+/* 错误消息 - 中号字体 */
+.error-message {
+  font-size: 1.8rem;
+  color: #444;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* 错误描述 - 灰色小字 */
+.error-description {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 32px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 操作按钮容器 */
+.error-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap; /* 小屏幕自动换行 */
+}
+
+/* 按钮基础样式 */
+.error-btn {
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  border: none;
+}
+
+/* 主按钮样式 (返回首页) */
+.error-btn.primary-btn {
+  background: #165dff; /* 主色调蓝色 */
+  color: white;
+}
+
+.error-btn.primary-btn:hover {
+  background: #0d47a1; /* 深色hover效果 */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 93, 255, 0.2);
+}
+
+/* 次要按钮样式 (浏览资源) */
+.error-btn.secondary-btn {
+  background: #f1f5f9; /* 浅灰色背景 */
+  color: #334155;
+}
+
+.error-btn.secondary-btn:hover {
+  background: #e2e8f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 按钮图标 */
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+/* 页脚信息 */
+.error-footer {
+  margin-top: 24px;
+  color: #94a3b8;
+  font-size: 0.875rem;
+}
+
+/* 响应式调整 - 小屏幕适配 */
+@media (max-width: 576px) {
+  .not-found-content {
+    padding: 30px 20px; /* 减小内边距 */
+  }
+
+  .error-code {
+    font-size: 4.5rem; /* 缩小错误代码 */
+  }
+
+  .error-message {
+    font-size: 1.5rem;
+  }
+
+  .error-actions {
+    flex-direction: column; /* 按钮垂直排列 */
+    gap: 12px;
+  }
+
+  .error-btn {
+    width: 100%; /* 按钮占满宽度 */
+    justify-content: center;
+  }
+}

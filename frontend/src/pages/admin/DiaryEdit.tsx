@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { createDiary, updateDiary, fetchDiaryById, fetchAllCategories, fetchAllTags } from '../../api/index';
-import type { Diary, Category, Tag } from '../../types/index';
+import { createDiary, updateDiary, fetchDiaryById, fetchAllCategories, fetchAllTags } from '../../api/apiServices';
+import type { Diary, Category, Tag } from '../../types/dataTypes';
 import './css/EditPage.css';
 
 const DiaryEdit: React.FC = () => {
@@ -25,21 +25,21 @@ const DiaryEdit: React.FC = () => {
 
   // 心情選項
   const moodOptions = [
-    { value: 'HAPPY', label: '開心' },
-    { value: 'SAD', label: '難過' },
-    { value: 'EXCITED', label: '興奮' },
-    { value: 'CALM', label: '平靜' },
-    { value: 'ANGRY', label: '生氣' },
-    { value: 'ANXIOUS', label: '焦慮' }
+    { value: 'HAPPY', label: '😊 開心', color: '#ffd700' },
+    { value: 'SAD', label: '😢 難過', color: '#87ceeb' },
+    { value: 'EXCITED', label: '🤩 興奮', color: '#ff69b4' },
+    { value: 'CALM', label: '😌 平靜', color: '#98fb98' },
+    { value: 'ANGRY', label: '😠 生氣', color: '#ff6347' },
+    { value: 'ANXIOUS', label: '😰 焦慮', color: '#dda0dd' }
   ];
 
   // 天氣選項
   const weatherOptions = [
-    { value: 'SUNNY', label: '晴天' },
-    { value: 'CLOUDY', label: '多雲' },
-    { value: 'RAINY', label: '雨天' },
-    { value: 'SNOWY', label: '雪天' },
-    { value: 'WINDY', label: '大風' }
+    { value: 'SUNNY', label: '☀️ 晴天', color: '#ffd700' },
+    { value: 'CLOUDY', label: '☁️ 多雲', color: '#d3d3d3' },
+    { value: 'RAINY', label: '🌧️ 雨天', color: '#87ceeb' },
+    { value: 'SNOWY', label: '❄️ 雪天', color: '#f0f8ff' },
+    { value: 'WINDY', label: '💨 大風', color: '#e6e6fa' }
   ];
 
   // 載入分類和標籤
@@ -169,33 +169,39 @@ const DiaryEdit: React.FC = () => {
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="mood">心情</label>
-            <select
-              id="mood"
-              value={diary.mood || 'CALM'}
-              onChange={(e) => handleInputChange('mood', e.target.value)}
-            >
+            <label>心情</label>
+            <div className="mood-selector">
               {moodOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
+                <label key={option.value} className="mood-option">
+                  <input
+                    type="radio"
+                    name="mood"
+                    value={option.value}
+                    checked={diary.mood === option.value}
+                    onChange={(e) => handleInputChange('mood', e.target.value)}
+                  />
+                  <span style={{ color: option.color }}>{option.label}</span>
+                </label>
               ))}
-            </select>
+            </div>
           </div>
 
           <div className="form-group">
-            <label htmlFor="weather">天氣</label>
-            <select
-              id="weather"
-              value={diary.weather || 'SUNNY'}
-              onChange={(e) => handleInputChange('weather', e.target.value)}
-            >
+            <label>天氣</label>
+            <div className="weather-selector">
               {weatherOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
+                <label key={option.value} className="weather-option">
+                  <input
+                    type="radio"
+                    name="weather"
+                    value={option.value}
+                    checked={diary.weather === option.value}
+                    onChange={(e) => handleInputChange('weather', e.target.value)}
+                  />
+                  <span style={{ color: option.color }}>{option.label}</span>
+                </label>
               ))}
-            </select>
+            </div>
           </div>
         </div>
 

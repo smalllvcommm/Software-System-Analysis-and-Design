@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { studyCheckInService } from '../../api';
-import type { StudyCheckIn } from '../../types';
+import { studyCheckInService } from '../../api/apiServices';
+import type { StudyCheckIn } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const StudyCheckInEdit = () => {

@@ -74,8 +74,8 @@ import translations from 'ckeditor5/translations/zh-cn.js';
 import 'ckeditor5/ckeditor5.css';
 import './css/EditPage.css';
 
-import { fetchArticleById, createArticle, updateArticle, fetchAllCategories, fetchAllTags } from '../../api/index';
-import type { Article, Category, Tag } from '../../types/index';
+import { fetchArticleById, createArticle, updateArticle, fetchAllCategories, fetchAllTags } from '../../api/apiServices';
+import type { Article, Category, Tag } from '../../types/dataTypes';
 
 // 使用GPL许可证（开源项目）
 const LICENSE_KEY = 'GPL';

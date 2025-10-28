@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { websiteService } from '../../api';
-import type { Website } from '../../types';
+import { websiteService } from '../../api/apiServices';
+import type { Website } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const WebsiteEdit = () => {

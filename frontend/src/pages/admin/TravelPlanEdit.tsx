@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { travelPlanService } from '../../api';
-import type { TravelPlan } from '../../types';
+import { travelPlanService } from '../../api/apiServices';
+import type { TravelPlan } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const TravelPlanEdit = () => {

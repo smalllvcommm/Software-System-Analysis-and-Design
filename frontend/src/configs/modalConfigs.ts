@@ -1,5 +1,5 @@
 // src/configs/modalConfigs.ts
-import type { ModalProps } from '../types/te/Modal';
+import type { ModalProps } from '../types/modalTypes';
 
 // 基础模态框配置模板（公共属性）
 const baseModalConfig: Partial<ModalProps> = {

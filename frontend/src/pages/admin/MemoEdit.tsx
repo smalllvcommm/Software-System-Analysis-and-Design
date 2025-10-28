@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { memoService } from '../../api';
-import type { Memo } from '../../types';
+import { memoService } from '../../api/apiServices';
+import type { Memo } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const MemoEdit = () => {

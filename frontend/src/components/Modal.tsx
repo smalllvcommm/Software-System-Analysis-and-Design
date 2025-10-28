@@ -4,8 +4,8 @@ import { useOutsideClick } from '../hooks/useOutsideClick'; // 封装点击外�
 import './css/Modal.css';
 
 // 引入类型定义
-import type { ModalProps, ModalButton } from '../types/te/Modal';
-import type { FormField } from '../types/te/Modal';
+import type { ModalProps, ModalButton } from '../types/modalTypes';
+import type { FormField } from '../types/modalTypes';
 
 export default function Modal({
   isOpen,

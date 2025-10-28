@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { videoService } from '../../api';
-import type { Video } from '../../types';
+import { videoService } from '../../api/apiServices';
+import type { Video } from '../../types/dataTypes';
 import './css/ArticleEdit.css';
 
 const VideoEdit = () => {

@@ -6,31 +6,21 @@ import { AuthGuard } from './AuthGuard';
 // 布局组件
 import RootLayout from '../layouts/RootLayout.tsx';
 import PublicLayout from '../layouts/PublicLayout.tsx';
-import StudyLayout from '../layouts/StudyLayout.tsx';
 import AdminLayout from '../layouts/AdminLayout.tsx';
 
 // 公共页面
-import Home from '../pages/public/Home.tsx';
-import About from '../pages/public/About.tsx';
-import Login from '../pages/public/Login.tsx';
-import Register from '../pages/public/Register.tsx';
-import Profile from '../pages/Profile.tsx';
-import Workspace from '../pages/Workspace.tsx';
-import Nomatch from '../pages/public/Nomatch.tsx';
+import Home from '../pages/LandingPage/Home.tsx';
+import Login from '../pages/Auth/Login.tsx';
+import Register from '../pages/Auth/Register.tsx';
+import Profile from '../pages/User/Profile.tsx';
+import Workspace from '../pages/User/Workspace.tsx';
+import TodoList from '../pages/User/TodoList.tsx';
+import DiaryList from '../pages/User/DiaryList.tsx';
+import Nomatch from '../pages/Common/Nomatch.tsx';
 
-// 学习部分组件
-import StudyHome from '../pages/study/Home.tsx';
-// import SubjectList from '../pages/study/SubjectList.tsx';
-// import SubjectDetail from '../pages/study/SubjectDetail.tsx';
-// import CardList from '../pages/study/CardList.tsx';
-// import CardDetail from '../pages/study/CardDetail.tsx';
-
-// import SubjectCardList from '../pages/study/SubjectCardList.tsx';
-import ArticleList from '../pages/study/ArticleList.tsx';
-import ArticleDetail from '../pages/study/ArticleDetail.tsx';
-// import CardRelatedArticle from '../pages/study/CardRelatedArticle.tsx';
-// import RecentStudy from '../pages/study/RecentStudy.tsx';
-// import FavoritesCollection from '../pages/study/FavoritesCollection.tsx';
+// 文章相关页面
+import ArticleList from '../pages/Articles/ArticleList.tsx';
+import ArticleDetail from '../pages/Articles/ArticleDetail.tsx';
 
 // 后台部分组件
 import Dashboard from '../pages/admin/Dashboard.tsx';
@@ -46,8 +36,6 @@ import StudyCheckInEdit from '../pages/admin/StudyCheckInEdit.tsx';
 import CategoryEdit from '../pages/admin/CategoryEdit.tsx';
 import TagEdit from '../pages/admin/TagEdit.tsx';
 import DiaryEdit from '../pages/admin/DiaryEdit.tsx';
-import TodoEdit from '../pages/admin/TodoEdit.tsx';
-
 
 // 公共路由
 const publicRoutes: RouteObject = {
@@ -59,40 +47,11 @@ const publicRoutes: RouteObject = {
     { path: 'register', element: <Register /> },
     { path: 'workspace', element: <Workspace /> },
     { path: 'profile', element: <Profile /> },
-    { path: 'about', element: <About /> },
     { path: 'articles', element: <ArticleList /> },
     { path: 'articles/:id', element: <ArticleDetail /> },
+    { path: 'todoList', element: <TodoList /> },
+    { path: 'diaryList', element: <DiaryList /> },
     { path: '*', element: <Nomatch /> }
-  ]
-};
-
-// 学习路由
-const studyRoutes: RouteObject = {
-  path: '/study',
-  element: <StudyLayout />,
-  children: [
-    // 学习中心首页
-    { index: true, element: <StudyHome /> },
-    
-    // // 学科体系路由
-    // { path: 'subjects', element: <SubjectList /> },
-    // { path: 'subjects/:id', element: <SubjectDetail /> },
-    // { path: 'subjects/:subjectId/cards', element: <SubjectCardList /> },
-    
-    // // 知识卡片路由
-    // { path: 'cards', element: <CardList /> },
-    // { path: 'cards/:id', element: <CardDetail /> },
-    // { path: 'cards/:cardId/article', element: <CardRelatedArticle /> },
-    
-    // // 文章内容路由
-    { path: 'articles', element: <ArticleList /> },
-
-    
-    // // 辅助浏览功能
-    // { path: 'recent', element: <RecentStudy /> },
-    // { path: 'favorites', element: <FavoritesCollection /> },
-    
-    // 学习区域重定向
   ]
 };
 
@@ -119,7 +78,6 @@ const adminRoutes: RouteObject = {
     { path: 'list/categories/edit/:id?', element: <CategoryEdit /> },
     { path: 'list/tags/edit/:id?', element: <TagEdit /> },
     { path: 'list/diaries/edit/:id?', element: <DiaryEdit /> },
-    { path: 'list/todos/edit/:id?', element: <TodoEdit /> },
   ]
 };
 
@@ -130,7 +88,6 @@ const routes: RouteObject[] = [
     element: <RootLayout />,
     children: [
       publicRoutes,
-      studyRoutes,
       adminRoutes
     ]
   }

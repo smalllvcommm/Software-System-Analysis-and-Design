@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import api from '../../services/api';
+import { apiClient } from '../../api/utils/apiClient';
 import './css/Dashboard.css';
 
 interface DashboardStats {
@@ -56,29 +56,29 @@ const Dashboard: React.FC = () => {
         travelPlansRes,
         studyCheckInsRes
       ] = await Promise.all([
-        api.get('/articles').catch(() => ({ data: [] })),
-        api.get('/categories').catch(() => ({ data: [] })),
-        api.get('/tags').catch(() => ({ data: [] })),
-        api.get('/memos').catch(() => ({ data: [] })),
-        api.get('/audios').catch(() => ({ data: [] })),
-        api.get('/videos').catch(() => ({ data: [] })),
-        api.get('/websites').catch(() => ({ data: [] })),
-        api.get('/expenses').catch(() => ({ data: [] })),
-        api.get('/travel-plans').catch(() => ({ data: [] })),
-        api.get('/study-check-ins').catch(() => ({ data: [] }))
+        apiClient.get('/articles').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/categories').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/tags').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/memos').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/audios').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/videos').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/websites').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/expenses').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/travel-plans').catch(() => ({ data: { data: [] } })),
+        apiClient.get('/study-check-ins').catch(() => ({ data: { data: [] } }))
       ]);
 
       setStats({
-        articles: Array.isArray(articlesRes.data) ? articlesRes.data.length : 0,
-        categories: Array.isArray(categoriesRes.data) ? categoriesRes.data.length : 0,
-        tags: Array.isArray(tagsRes.data) ? tagsRes.data.length : 0,
-        memos: Array.isArray(memosRes.data) ? memosRes.data.length : 0,
-        audios: Array.isArray(audiosRes.data) ? audiosRes.data.length : 0,
-        videos: Array.isArray(videosRes.data) ? videosRes.data.length : 0,
-        websites: Array.isArray(websitesRes.data) ? websitesRes.data.length : 0,
-        expenses: Array.isArray(expensesRes.data) ? expensesRes.data.length : 0,
-        travelPlans: Array.isArray(travelPlansRes.data) ? travelPlansRes.data.length : 0,
-        studyCheckIns: Array.isArray(studyCheckInsRes.data) ? studyCheckInsRes.data.length : 0
+        articles: Array.isArray(articlesRes.data.data) ? articlesRes.data.data.length : 0,
+        categories: Array.isArray(categoriesRes.data.data) ? categoriesRes.data.data.length : 0,
+        tags: Array.isArray(tagsRes.data.data) ? tagsRes.data.data.length : 0,
+        memos: Array.isArray(memosRes.data.data) ? memosRes.data.data.length : 0,
+        audios: Array.isArray(audiosRes.data.data) ? audiosRes.data.data.length : 0,
+        videos: Array.isArray(videosRes.data.data) ? videosRes.data.data.length : 0,
+        websites: Array.isArray(websitesRes.data.data) ? websitesRes.data.data.length : 0,
+        expenses: Array.isArray(expensesRes.data.data) ? expensesRes.data.data.length : 0,
+        travelPlans: Array.isArray(travelPlansRes.data.data) ? travelPlansRes.data.data.length : 0,
+        studyCheckIns: Array.isArray(studyCheckInsRes.data.data) ? studyCheckInsRes.data.data.length : 0
       });
       
       setLoading(false);

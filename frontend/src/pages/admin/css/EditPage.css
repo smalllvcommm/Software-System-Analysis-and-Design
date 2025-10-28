@@ -209,6 +209,45 @@
   color: var(--edit-text);
 }
 
+/* 心情和天氣選擇器 */
+.mood-selector,
+.weather-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+.mood-option,
+.weather-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--edit-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--edit-card-bg);
+}
+
+.mood-option:hover,
+.weather-option:hover {
+  border-color: var(--edit-primary);
+  background: rgba(45, 126, 94, 0.05);
+}
+
+.mood-option input[type="radio"],
+.weather-option input[type="radio"] {
+  margin: 0;
+  accent-color: var(--edit-primary);
+}
+
+.mood-option span,
+.weather-option span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* 操作按钮区 */
 .edit-actions {
   display: flex;

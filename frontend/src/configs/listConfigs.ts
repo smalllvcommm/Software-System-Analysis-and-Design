@@ -1,5 +1,5 @@
 // src/configs/listConfigs.ts
-import type { ListConfig } from '../types/te/List';
+import type { ListConfig } from '../types/uiTypes';
 import {
     createArticle,
     deleteArticle,
@@ -69,7 +69,7 @@ import {
     fetchAllCategories,
     fetchAllArticles,
     fetchAllTags
-} from '../api/index';
+} from '../api/apiServices';
 import type { 
     Article,
     KnowledgeCard,
@@ -84,7 +84,7 @@ import type {
     TravelPlan,
     Video,
     Diary
-} from '../types/index';
+} from '../types/dataTypes';
 
 // 文章列表配置
 export const articleListConfig: ListConfig<Article> = {

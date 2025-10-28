@@ -1,5 +1,5 @@
 import { apiClient } from './apiClient';
-import type { Page } from '../../types/index';
+import type { Page } from '../../types/dataTypes';
 import type { ApiResponse } from './apiClient';
 
 export function createCRUDService<T, FilterParams = any>(baseUrl: string) {

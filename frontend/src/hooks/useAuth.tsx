@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import authService from '../services/authService';
+import { login as apiLogin, register as apiRegister } from '../api/apiServices';
 
 // 定义系统支持的合法角色（核心：将string收窄为具体选项）
 export type ValidRole = 'ADMIN' | 'USER'; 
@@ -19,6 +19,7 @@ interface AuthContextType {
   isLoading: boolean;
   error: string | null;
   login: (username: string, password: string) => Promise<void>;
+  register: (username: string, password: string, email?: string) => Promise<void>;
   logout: () => void;
   hasRole: (requiredRole: ValidRole) => boolean;
   clearError: () => void;
@@ -39,15 +40,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initAuth = () => {
       try {
-        const username = authService.getUsername();
-        const role = authService.getRole();
+        const username = localStorage.getItem('username');
+        const role = localStorage.getItem('role');
         
         if (username && role && isValidRole(role)) {
           setUser({ username, role });
         }
       } catch (err) {
         console.error('用户数据无效，已清除', err);
-        authService.logout();
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('role');
       } finally {
         setIsLoading(false);
       }
@@ -68,14 +71,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
 
     try {
-      const response = await authService.login({ username, password });
+      const response = await apiLogin(username, password);
       
-      // 校验API返回的role是否合法
-      if (!isValidRole(response.role)) {
-        throw new Error(`后端返回无效角色: ${response.role}`);
-      }
+      if (response.success && response.data) {
+        // 校验API返回的role是否合法
+        if (!isValidRole(response.data.role)) {
+          throw new Error(`后端返回无效角色: ${response.data.role}`);
+        }
 
-      setUser({ username: response.username, role: response.role });
+        // 保存 Token 到 localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('role', response.data.role);
+
+        setUser({ username: response.data.username, role: response.data.role });
+      } else {
+        throw new Error(response.message || '登录失败');
+      }
       
       // 登录成功后，跳转逻辑由Login组件的useEffect处理，这里不再导航
 
@@ -87,6 +99,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [navigate]);
 
+  // 注册方法
+  const register = useCallback(async (username: string, password: string, email?: string) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await apiRegister(username, password, email);
+      
+      if (response.success && response.data) {
+        // 校验API返回的role是否合法
+        if (!isValidRole(response.data.role)) {
+          throw new Error(`后端返回无效角色: ${response.data.role}`);
+        }
+
+        // 保存 Token 到 localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('role', response.data.role);
+
+        setUser({ username: response.data.username, role: response.data.role });
+      } else {
+        throw new Error(response.message || '注册失败');
+      }
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '注册失败，请重试');
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   // 权限检查
   const hasRole = useCallback((requiredRole: ValidRole) => {
@@ -97,7 +140,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // 注销方法
   const logout = useCallback(() => {
     setUser(null);
-    authService.logout();
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
     navigate('/login', { replace: true });
   }, [navigate]);
 
@@ -112,6 +157,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       isLoading,
       error,
       login,
+      register,
       logout,
       hasRole,
       clearError
